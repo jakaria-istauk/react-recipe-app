@@ -1,13 +1,31 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
+
+const Menus = ( {isLoggedIn} ) => {
+  if(!isLoggedIn){
+    return(
+      <>
+      <Link to="/login" className="btn btn-outline-light me-2">Login</Link>
+      <Link to="/sign-up" className="btn btn-warning">Sign-up</Link>
+      </>
+    );
+  }
+  else{
+    return(
+      <button type="button" className="btn btn-outline-light me-2">Logout</button>
+    );
+  }
+}
 export default function Header() {
+  let isLoggedIn = false;
   return (
     <header className="p-3 bg-dark text-white">
     <div className="container">
       <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <Link to="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           RECIPE
-        </a>
+        </Link>
 
         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           {/* <li><a href="#" className="nav-link px-2 text-secondary">Home</a></li>
@@ -18,8 +36,7 @@ export default function Header() {
         </ul>
 
         <div className="text-end">
-          <button type="button" className="btn btn-outline-light me-2">Login</button>
-          <button type="button" className="btn btn-warning">Sign-up</button>
+          <Menus isLoggedIn={isLoggedIn} />
         </div>
       </div>
     </div>
