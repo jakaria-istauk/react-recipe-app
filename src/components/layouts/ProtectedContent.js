@@ -3,10 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
 const ProtectedContent = () => {
-    let isLoggedIn = true;
+    let isLoggedIn = false;
   return (
     <>
-    {isLoggedIn ? <Outlet/> : <Navigate to="/sign-in" />}
+    {isLoggedIn ? <Outlet/> : <Navigate to="/login" />}
     </>
   )
 }

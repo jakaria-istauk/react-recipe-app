@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ProtectedContent from './layouts/ProtectedContent';
 import Login from './layouts/Login';
 import SignUp from './layouts/SignUp';
+import { AllRecipes } from './layouts/RecipeLayouts/AllRecipes';
 
 export const routes = [
     {
@@ -17,7 +18,7 @@ export const routes = [
                 children:[
                     {
                         index: true,
-                        element: <div>Hello</div>
+                        element: <AllRecipes/>
                     }
                 ]
             },
