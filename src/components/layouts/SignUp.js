@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useData from '../../hooks/useData';
+import { useDispatch } from 'react-redux';
 
 const SignUp = () => {
+    const [isSubmit, setIsSubmit] = useState(false);
+    const isLoggedIn = useData('isLoggedIn');
+    const dispatchAction = useDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -11,7 +17,12 @@ const SignUp = () => {
 			email: formData.get('email'),
 			password: formData.get('password'),
 		}
-        console.log(user);
+        
+        dispatchAction({
+            type: 'REGISTER_USER',
+            ...user
+        });
+        
     }
 
   return (
