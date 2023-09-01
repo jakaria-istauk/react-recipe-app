@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom';
+import { isLoggedIn, setLoggedOut } from '../../hooks/authentication';
+import { redirect } from 'react-router-dom';
 
 
 const Menus = ( {isLoggedIn} ) => {
+
+  const handleLogout = useCallback((e)=>{
+    setLoggedOut();
+    window.location.replace('/');
+  });
+
   if(!isLoggedIn){
     return(
       <>
@@ -13,12 +21,11 @@ const Menus = ( {isLoggedIn} ) => {
   }
   else{
     return(
-      <button type="button" className="btn btn-outline-light me-2">Logout</button>
+      <button type="button" onClick={handleLogout} className="btn btn-outline-light me-2">Logout</button>
     );
   }
 }
 export default function Header() {
-  let isLoggedIn = false;
   return (
     <header className="p-3 bg-dark text-white">
     <div className="container">

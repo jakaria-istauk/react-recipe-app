@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import useData from '../../hooks/useData';
 import { useDispatch } from 'react-redux';
 import { getUserByEmail, registerUser } from '../redux/reducers';
+import { isLoggedIn, setLoggedIn } from '../../hooks/authentication';
+import { redirect } from 'react-router-dom';
 
 const SignUp = () => {
+    const loginPassword = useRef(null);
     const dispatchAction = useDispatch();
     const [hasUser, setHasUser] = useState(false);
+    const [isPassValid, setIsPassValid] = useState(false);
     const [user, setUser] = useState();
+
+    const handlePassword = useCallback((e) => {
+        setIsPassValid(loginPassword.current.value.length > 6);
+	})
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,14 +25,25 @@ const SignUp = () => {
 			email: formData.get('email'),
 			password: formData.get('password'),
 		}
+
+
+        if( user.password.length < 6 ){
+            setIsPassValid(false);
+            return;
+        }
         
         let theUser = getUserByEmail(user.email);
-        if( theUser.length > 0 ){
+        if( theUser ){
             setHasUser(true);
         }
         else{
             dispatchAction( registerUser(user) );
+            setLoggedIn(true);
+            window.location.replace('/');
         }
+    }
+    if(isLoggedIn){
+        window.location.replace('/');
     }
 
   return (
@@ -51,7 +69,8 @@ const SignUp = () => {
 
                     <div className="form-outline mb-4">
                         <label className="form-label" htmlFor="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" name='password' autoComplete='' className="form-control" required/>
+                        <input ref={loginPassword} onKeyDown={handlePassword} type="password" id="loginPassword" name='password' autoComplete='' className="form-control" required/>
+                        {!isPassValid ? <div className="invalid-feedback"> Password must have 6 characters </div> : ''}
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-block mb-4">Sign Up</button>

@@ -10,11 +10,11 @@ export const getUserByEmail = (email) => {
         return false;
     }
 
-    return data.users.filter(user => user.email === email);
+    let user = data.users.filter(user => user.email === email);
 
-
-    return false;
+    return user?.[0];
 }
+
 export const userSlice = createSlice({
     name: 'users',
     initialState: [],
