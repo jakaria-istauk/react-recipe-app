@@ -8,7 +8,7 @@ const Ingredient = ({ingredient}) => {
     )
 }
 
-const Recipe = ({recipe, wrapperClass}) => {
+const Recipe = ({recipe, wrapperClass, isPreview}) => {
   return (
     <div className={wrapperClass}>
         <div className="card">
@@ -19,10 +19,15 @@ const Recipe = ({recipe, wrapperClass}) => {
                     {recipe.ingredients.split(",")?.map((ingredient, index)=> <Ingredient key={index} ingredient={ingredient} />)}
                 </div>
                 <p className="card-text">{recipe.recipe}</p>
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <Link to='/recipe/{recipe.id}' className="btn btn-primary">View Details</Link>
-                    {isLoggedIn ? <Link to='/edit-recipe/id' className="btn btn-outline-primary">Edit Recipe</Link> : ''}
-                </div>
+                {
+                    !isPreview ? 
+                    <>
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <Link to='/recipe/{recipe.id}' className="btn btn-primary">View Details</Link>
+                            {isLoggedIn ? <Link to='/edit-recipe/id' className="btn btn-outline-primary">Edit Recipe</Link> : ''}
+                        </div>
+                    </> : ''
+                }
             </div>
         </div>
     </div>

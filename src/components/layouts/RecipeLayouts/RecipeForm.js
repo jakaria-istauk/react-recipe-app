@@ -1,20 +1,33 @@
-import React, { useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import Recipe from './Recipe';
 
 const RecipeForm = () => {
     const [recipe, setRecipe] = useState(
         {
             image: 'https://www.foodiesfeed.com/wp-content/uploads/2023/04/delicious-steak-with-herbs-cut-on-slices.jpg',
-            title: 'steak',
-            ingredients: 'bun,chees,chciken,onion',
-            recipe: 'The Card can add the image caption either to the top or the bottom, which is similar to the headers and footers & accordingly, an image can be aligned at the top or bottom of a card.'
+            title: 'Recipe Name',
+            ingredients: 'Ingredients 1, Ingredients 2, Ingredients 3',
+            recipe: 'This recipe made with this process'
         }
     );
 
-    console.log(recipe)
+    const setName = useCallback(e => {
+        recipe.title = e.target.value;
+        setRecipe(recipe);
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        const newRecipe = {
+            title: formData.get('name'),
+			image: formData.get('image'),
+			ingredients: formData.get('ingredients'),
+            recipe: formData.get('recipe')
+		}
+
+        console.log(newRecipe);
     }
   return (
     <form action="#" method='post' onSubmit={handleSubmit}> 
@@ -24,7 +37,7 @@ const RecipeForm = () => {
                 <div className='card p-4'>
                     <div className="mb-3">
                         <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
-                        <input id="name" name='name' type="text" className="form-control-plaintext border p-2 rounded" />
+                        <input id="name" name='name' type="text" className="form-control-plaintext border p-2 rounded" onKeyUp={setName} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="image" className="col-sm-2 col-form-label">Image Url</label>
@@ -32,7 +45,7 @@ const RecipeForm = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="ingredients" className="col-sm-2 col-form-label">Ingredients</label>
-                        <input id="ingredients" name='ingredients' type="text" className="form-control-plaintext border p-2 rounded" />
+                        <input id="ingredients" name='ingredients' type="text" className="form-control-plaintext border p-2 rounded" placeholder='Ingredients 1, Ingredients 2, Ingredients 3'/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="recipe" className="col-sm-2 col-form-label">How to cook</label>
@@ -43,7 +56,7 @@ const RecipeForm = () => {
                     </div>
                 </div>
             </div>
-            <Recipe recipe={recipe} wrapperClass={`col-md-4 p-0`} />
+            <Recipe recipe={recipe} wrapperClass={`col-md-4 p-0`} isPreview={true} />
         </div>
     </form>
   )
