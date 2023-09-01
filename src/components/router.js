@@ -4,7 +4,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import ProtectedContent from './layouts/ProtectedContent';
 import Login from './layouts/Login';
 import SignUp from './layouts/SignUp';
-import { AllRecipes } from './layouts/RecipeLayouts/AllRecipes';
+import Recipes from './layouts/RecipeLayouts/Recipes';
+import RecipeForm from './layouts/RecipeLayouts/RecipeForm';
 
 export const routes = [
     {
@@ -18,7 +19,11 @@ export const routes = [
                 children:[
                     {
                         index: true,
-                        element: <AllRecipes/>
+                        element: <Recipes/>
+                    },
+                    {
+                        path: '/add-recipe',
+                        element: <RecipeForm/>
                     }
                 ]
             },
