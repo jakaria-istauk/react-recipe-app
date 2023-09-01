@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import { store } from './redux'
 
-const Recipe = () => {
+const MainApp = () => {
   return (
     <Provider store={store}>
         <RouterProvider router={router}/>
@@ -16,4 +16,4 @@ store.subscribe(( t )=>{
 	window.localStorage.setItem( 'my_recipe_app', JSON.stringify( store.getState() ) )
 })
 
-export default Recipe;
+export default MainApp;

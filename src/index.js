@@ -1,9 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-// import './app.css';
-import Recipe from './components/Recipe';
+import MainApp from './components/MainApp';
 
 
 const root = createRoot( document.getElementById('root') );
-root.render(<Recipe/>);
+root.render(<MainApp/>);
