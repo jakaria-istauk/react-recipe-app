@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from './common/Header'
-import Footer from './common/Footer'
 import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'

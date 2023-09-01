@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useData from '../../hooks/useData';
 import { useDispatch } from 'react-redux';
+import { registerUser } from '../redux/reducers';
 
 const SignUp = () => {
-    const [isSubmit, setIsSubmit] = useState(false);
-    const isLoggedIn = useData('isLoggedIn');
     const dispatchAction = useDispatch();
 
     const handleSubmit = (e) => {
@@ -18,10 +17,7 @@ const SignUp = () => {
 			password: formData.get('password'),
 		}
         
-        dispatchAction({
-            type: 'REGISTER_USER',
-            ...user
-        });
+        dispatchAction( registerUser(user) );
         
     }
 
