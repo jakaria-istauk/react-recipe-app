@@ -33,10 +33,8 @@ const Recipes = () => {
     }
   ]);
   return (
-    <div className='container my-4'>
-      <div className='row gy-3'>
+    <div className='row gy-3'>
         { recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} /> ) }
-      </div>
     </div>
   )
 }

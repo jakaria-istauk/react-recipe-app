@@ -8,7 +8,9 @@ export default function General() {
   return (
     <>
         <Header/>
-        <Outlet/>
+        <div className='container py-3'>
+          <Outlet/>
+        </div>
         <Footer/>
     </>
   )

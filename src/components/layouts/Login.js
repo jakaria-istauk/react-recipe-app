@@ -32,30 +32,28 @@ function Login() {
     }
 
   return (
-    <div className='container'>
-        <form action="#" method='post' onSubmit={handleSubmit}>
-            <div className='row justify-content-md-center'>
-                <div className='card col col-lg-6 m-4 p-4'>
-                {!valid ? <div className="alert alert-danger text-center" role="alert">Invalid Email or Password!</div> : ''}
-                    <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="loginName">Email or username</label>
-                        <input type="email" name='email' id="loginName" className="form-control" required/>
-                    </div>
+    <form action="#" method='post' onSubmit={handleSubmit}>
+        <div className='row justify-content-md-center'>
+            <div className='card col col-lg-6 m-4 p-4'>
+            {!valid ? <div className="alert alert-danger text-center" role="alert">Invalid Email or Password!</div> : ''}
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="loginName">Email or username</label>
+                    <input type="email" name='email' id="loginName" className="form-control" required/>
+                </div>
 
-                    <div className="form-outline mb-4">
-                        <label className="form-label" htmlFor="loginPassword">Password</label>
-                        <input type="password" name='password' id="loginPassword" className="form-control" autoComplete='' required/>
-                    </div>
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="loginPassword">Password</label>
+                    <input type="password" name='password' id="loginPassword" className="form-control" autoComplete='' required/>
+                </div>
 
-                    <button type="submit" className="btn btn-primary btn-block mb-4">Sign in</button>
+                <button type="submit" className="btn btn-primary btn-block mb-4">Sign in</button>
 
-                    <div className="text-center">
-                        <p>Not a member? <Link to="/sign-up">Register</Link></p>
-                    </div>
+                <div className="text-center">
+                    <p>Not a member? <Link to="/sign-up">Register</Link></p>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
   )
 }
 
