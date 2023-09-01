@@ -34,7 +34,7 @@ const Recipes = () => {
   ]);
   return (
     <div className='row gy-3'>
-        { recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} /> ) }
+        { recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} wrapperClass={`col-md-3 p-1`} /> ) }
     </div>
   )
 }
