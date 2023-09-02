@@ -8,6 +8,7 @@ import Recipes from './layouts/RecipeLayouts/Recipes';
 import RecipeForm from './layouts/RecipeLayouts/RecipeForm';
 import Recipe from './layouts/RecipeLayouts/Recipe';
 import RecipeDetails from './layouts/RecipeLayouts/RecipeDetails';
+import Error404 from './common/404';
 
 export const routes = [
     {
@@ -24,7 +25,7 @@ export const routes = [
                         element: <Recipes/>
                     },
                     {
-                        path: '/recipe/add',
+                        path: '/recipe/new',
                         element: <RecipeForm key="add"/>
                     },
                     {
@@ -44,6 +45,10 @@ export const routes = [
             {
                 path: '/sign-up',
                 element: <SignUp/>
+            },
+            {
+                path: '*',
+                element: <Error404/>
             },
         ]
 

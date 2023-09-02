@@ -28,6 +28,9 @@ export const recipeSlice = createSlice({
     reducers: {
         addNewRecipe: (state, action) => {
             state.push(action.payload);
+        },
+        updateRecipe: (state, action) => {
+            console.log(state, action)
         }
     }
 });
@@ -36,5 +39,5 @@ export const { registerUser } = userSlice.actions
 export const userReducer = userSlice.reducer
 
 
-export const { addNewRecipe } = recipeSlice.actions
+export const { addNewRecipe, updateRecipe } = recipeSlice.actions
 export const recipeReducer = recipeSlice.reducer

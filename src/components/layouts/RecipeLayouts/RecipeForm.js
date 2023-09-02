@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Recipe from './Recipe';
 import { useDispatch } from 'react-redux';
-import { addNewRecipe } from '../../redux/reducers';
+import { addNewRecipe, updateRecipe } from '../../redux/reducers';
 import { useParams } from 'react-router-dom';
 import { getRecipeById } from '../../../hooks/fetchRecipe';
 
@@ -42,16 +42,19 @@ const RecipeForm = () => {
         const formData = new FormData(e.target);
         
         const newRecipe = {
-            id: Date.now(),
+            id: !isEditMode ? Date.now() : formData.get('id'),
             title: formData.get('title'),
 			image: formData.get('image'),
 			ingredients: formData.get('ingredients'),
             recipe: formData.get('recipe')
 		}
 
-        console.log(isEditMode);
-
-        // dispatchAction( addNewRecipe(newRecipe) );
+        if(!isEditMode){
+            dispatchAction( addNewRecipe(newRecipe) );
+        }
+        else{
+            dispatchAction( updateRecipe(newRecipe) );
+        }
     }
 
   return (
