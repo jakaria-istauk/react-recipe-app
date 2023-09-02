@@ -4,7 +4,7 @@ import { isLoggedIn } from '../../../hooks/authentication'
 
 const Ingredient = ({ingredient}) => {
     return(
-        ingredient !== '' ? <span className="badge bg-primary mx-1">{ingredient}</span> : ''
+        ingredient !== '' ? <span className="badge bg-primary me-1">{ingredient}</span> : ''
     )
 }
 
@@ -13,6 +13,7 @@ const Recipe = ({recipe, className, isPreview}) => {
   return (
     <div className={className}>
         <div className="card">
+            <h6 className='card-header text-center'>Recipe Preview</h6>
             <img src={recipe.image ? recipe.image : placeholderImage} className="card-img-top image-square" alt={recipe.title}/>
             <div className="card-body">
                 <h5 className="card-title">{recipe.title}</h5>

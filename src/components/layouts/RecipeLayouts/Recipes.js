@@ -9,7 +9,7 @@ const Recipes = () => {
     <div className='row gy-3'>
         {
           recipes.length < 1 ? 
-          <div class="alert alert-info" >
+          <div className="alert alert-info" >
             No Recipe found. <Link to='/recipe/new'>Add Recipe</Link>
           </div>
           : ''

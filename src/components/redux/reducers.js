@@ -30,7 +30,7 @@ export const recipeSlice = createSlice({
             state.push(action.payload);
         },
         updateRecipe: (state, action) => {
-            console.log(state, action)
+            state.map(item => console.log(item))
         }
     }
 });
