@@ -4,15 +4,16 @@ import { isLoggedIn } from '../../../hooks/authentication'
 
 const Ingredient = ({ingredient}) => {
     return(
-        <span className="badge bg-primary mx-1">{ingredient}</span>
+        ingredient !== '' ? <span className="badge bg-primary mx-1">{ingredient}</span> : ''
     )
 }
 
-const Recipe = ({recipe, wrapperClass, isPreview}) => {
+const Recipe = ({recipe, className, isPreview}) => {
+    let placeholderImage = 'https://placehold.co/800?text=Recipe+Image&font=merienda';
   return (
-    <div className={wrapperClass}>
+    <div className={className}>
         <div className="card">
-            <img src={recipe.image} className="card-img-top image-square" alt={recipe.title}/>
+            <img src={recipe.image ? recipe.image : placeholderImage} className="card-img-top image-square" alt={recipe.title}/>
             <div className="card-body">
                 <h5 className="card-title">{recipe.title}</h5>
                 <div className='mb-3'>
