@@ -49,7 +49,7 @@ export default function Header() {
           {
               isLoggedIn ?
               <ul className="navbar-nav">
-                <li><Link to="/add-recipe" className='nav-link px-2 text-white'>Add New Recipe</Link></li>
+                <li><Link to="/recipe/add" className='nav-link px-2 text-white'>Add New Recipe</Link></li>
                 <li><Link to="/" className='nav-link px-2 text-white'>All Recipe</Link></li>
               </ul>
               : ''

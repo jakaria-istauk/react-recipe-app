@@ -25,7 +25,7 @@ const Recipe = ({recipe, className, isPreview}) => {
                     <>
                         <div className="btn-group" role="group" aria-label="Basic example">
                             <Link to={`/recipe/${recipe.id}`} className="btn btn-primary">View Details</Link>
-                            {isLoggedIn ? <Link to={`/edit-recipe/${recipe.id}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
+                            {isLoggedIn ? <Link to={`/recipe/edit/${recipe.id}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
                         </div>
                     </> : ''
                 }

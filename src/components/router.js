@@ -24,13 +24,17 @@ export const routes = [
                         element: <Recipes/>
                     },
                     {
-                        path: '/add-recipe',
+                        path: '/recipe/add',
                         element: <RecipeForm/>
                     },
                     {
                         path: '/recipe/:id',
                         element: <RecipeDetails/>
-                    }
+                    },
+                    {
+                        path: '/recipe/edit/:id',
+                        element: <RecipeForm/>
+                    },
                 ]
             },
             {
