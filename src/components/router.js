@@ -25,7 +25,7 @@ export const routes = [
                     },
                     {
                         path: '/recipe/add',
-                        element: <RecipeForm/>
+                        element: <RecipeForm key="add"/>
                     },
                     {
                         path: '/recipe/:id',
@@ -33,7 +33,7 @@ export const routes = [
                     },
                     {
                         path: '/recipe/edit/:id',
-                        element: <RecipeForm/>
+                        element: <RecipeForm key="edit"/>
                     },
                 ]
             },

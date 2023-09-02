@@ -9,6 +9,7 @@ const RecipeForm = () => {
     const dispatchAction = useDispatch();
     const params = useParams();
     const [pageTitle, updatePageTitle] = useState('Add a new Recipe');
+    const [isEditMode, setisEditMode] = useState(false);
     const [recipe, setRecipe] = useState(
         {
             image: 'https://placehold.co/800?text=Recipe+Image&font=merienda',
@@ -19,13 +20,13 @@ const RecipeForm = () => {
     );
 
     useEffect(()=>{
-        if( typeof params !== undefined ){
+        if( typeof params?.id != 'undefined' ){
             let _recipe = getRecipeById(params.id);
-            if( typeof _recipe !== undefined ){
+            if( typeof _recipe !== 'undefined' ){
                 setRecipe(_recipe);
             }
-            console.log(recipe)
-            updatePageTitle(`Edit Recipe : ${_recipe?.title}`)
+            setisEditMode(true);
+            updatePageTitle(`Edit ${_recipe?.title}`)
         }
     },[])
 
@@ -48,32 +49,36 @@ const RecipeForm = () => {
             recipe: formData.get('recipe')
 		}
 
-        dispatchAction( addNewRecipe(newRecipe) );
+        console.log(isEditMode);
+
+        // dispatchAction( addNewRecipe(newRecipe) );
     }
+
   return (
     <form action="#" method='post' onSubmit={handleSubmit}> 
-        <h1 className="display-6 text-center">{pageTitle}</h1>
+        <h1 className="display-6 text-center mb-4">{pageTitle}</h1>
         <div className='row'>
             <div className='col-md-8'>
                 <div className='card p-4'>
+                    { isEditMode ? <input type='hidden' name='id' defaultValue={recipe?.id} /> : '' }
                     <div className="mb-3">
                         <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
-                        <input defaultValue={recipe.title} id="name" name='title' type="text" className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} />
+                        <input defaultValue={ isEditMode ? recipe.title : ''} id="name" name='title' type="text" className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="image" className="col-sm-2 col-form-label">Image Url</label>
-                        <input defaultValue={recipe.image} id="image" name='image' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
+                        <input defaultValue={ isEditMode ? recipe.image : ''} id="image" name='image' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="ingredients" className="col-sm-2 col-form-label">Ingredients</label>
-                        <input defaultValue={recipe.ingredients} id="ingredients" name='ingredients' type="text" className="form-control-plaintext border p-2 rounded" placeholder='Ingredients 1, Ingredients 2, Ingredients 3' onKeyUp={handlePreview} />
+                        <input defaultValue={ isEditMode ? recipe.ingredients : ''} id="ingredients" name='ingredients' type="text" className="form-control-plaintext border p-2 rounded" placeholder='Ingredients 1, Ingredients 2, Ingredients 3' onKeyUp={handlePreview} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="recipe" className="col-sm-2 col-form-label">How to cook</label>
-                        <textarea defaultValue={recipe.recipe} id="recipe" name='recipe' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview}></textarea>
+                        <textarea defaultValue={ isEditMode ? recipe.recipe : ''} id="recipe" name='recipe' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5}></textarea>
                     </div>
                     <div>
-                        <button type="submit" className="btn btn-primary">Save Recipe</button>
+                        <button type="submit" className="btn btn-primary">{ isEditMode ? 'Update' : 'Save' } Recipe</button>
                     </div>
                 </div>
             </div>

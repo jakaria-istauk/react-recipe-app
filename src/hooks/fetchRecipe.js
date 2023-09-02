@@ -6,6 +6,6 @@ export const getAllRecipes = () => {
 
 export const getRecipeById = (id) => {
     let recipes = getAllRecipes();
-    let recipe = recipes?.filter(recipe => recipe.id == id)
+    let recipe = recipes?.filter(recipe => recipe.id == id);
     return recipe?.[0];
 }
