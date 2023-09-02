@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './reducers'
+import { recipeReducer, userReducer } from './reducers'
 
 export default configureStore({
 	reducer: {
-		users: userReducer
+		users: userReducer,
+		recipes: recipeReducer
 	}
 })

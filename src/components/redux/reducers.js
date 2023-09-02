@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-function filterUsersByEmail(arr, emailToMatch) {
-    return arr.filter(user => user.email === emailToMatch);
-  }
 export const getUserByEmail = (email) => {
     let data = JSON.parse( window.localStorage.getItem( 'my_recipe_app' ) );
 
@@ -25,5 +22,19 @@ export const userSlice = createSlice({
     }
 });
 
-export const { registerUser, getUser } = userSlice.actions
+export const recipeSlice = createSlice({
+    name: 'recipes',
+    initialState: [],
+    reducers: {
+        addNewRecipe: (state, action) => {
+            state.push(action.payload);
+        }
+    }
+});
+
+export const { registerUser } = userSlice.actions
 export const userReducer = userSlice.reducer
+
+
+export const { addNewRecipe } = recipeSlice.actions
+export const recipeReducer = recipeSlice.reducer

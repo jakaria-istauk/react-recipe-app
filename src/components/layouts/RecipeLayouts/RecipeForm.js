@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Recipe from './Recipe';
+import { useDispatch } from 'react-redux';
+import { addNewRecipe } from '../../redux/reducers';
 
 const RecipeForm = () => {
+    const dispatchAction = useDispatch();
     const [recipe, setRecipe] = useState(
         {
             image: 'https://placehold.co/800?text=Recipe+Image&font=merienda',
@@ -24,12 +27,13 @@ const RecipeForm = () => {
         
         const newRecipe = {
             id: Date.now(),
-            title: formData.get('name'),
+            title: formData.get('title'),
 			image: formData.get('image'),
 			ingredients: formData.get('ingredients'),
             recipe: formData.get('recipe')
 		}
 
+        dispatchAction( addNewRecipe(newRecipe) );
     }
   return (
     <form action="#" method='post' onSubmit={handleSubmit}> 
