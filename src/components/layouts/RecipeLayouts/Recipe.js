@@ -13,7 +13,7 @@ const Recipe = ({recipe, className, isPreview}) => {
   return (
     <div className={className}>
         <div className="card">
-            <h6 className='card-header text-center'>Recipe Preview</h6>
+            { isPreview ? <h6 className='card-header text-center'>Recipe Preview</h6> : '' }
             <img src={recipe.image ? recipe.image : placeholderImage} className="card-img-top image-square" alt={recipe.title}/>
             <div className="card-body">
                 <h5 className="card-title">{recipe.title}</h5>
