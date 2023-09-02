@@ -2,6 +2,9 @@
     height:250px;
     object-fit:cover;
 }
+.recipe-details .image-square{
+    height: auto;
+}
 .recipe-logo{
     height: 50px;
     width: 50px;

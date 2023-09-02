@@ -6,6 +6,8 @@ import Login from './layouts/Login';
 import SignUp from './layouts/SignUp';
 import Recipes from './layouts/RecipeLayouts/Recipes';
 import RecipeForm from './layouts/RecipeLayouts/RecipeForm';
+import Recipe from './layouts/RecipeLayouts/Recipe';
+import RecipeDetails from './layouts/RecipeLayouts/RecipeDetails';
 
 export const routes = [
     {
@@ -24,6 +26,10 @@ export const routes = [
                     {
                         path: '/add-recipe',
                         element: <RecipeForm/>
+                    },
+                    {
+                        path: '/recipe/:id',
+                        element: <RecipeDetails/>
                     }
                 ]
             },
