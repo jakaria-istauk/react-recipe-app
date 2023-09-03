@@ -1,6 +1,6 @@
 # Recipe App
 
-The Recipe App is a web application that allows users to browse, search, and discover a wide variety of food recipes. Whether you're a seasoned chef or a beginner in the kitchen, this app provides an easy way to find and prepare delicious meals.
+The Recipe App is a web application that allows users to browse, search, and discover a wide variety of food recipes. Whether you're a seasoned chef or a beginner in the kitchen, this app provides an easy way to find and prepare delicious meals. This App is handle from wordpress api which is handle by [wp-recipe-api](https://github.com/jakaria-istauk/wp-recipe-api) plugin.
 
 ## Features
 
