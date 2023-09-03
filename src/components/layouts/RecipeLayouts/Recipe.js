@@ -20,12 +20,12 @@ const Recipe = ({recipe, className, isPreview}) => {
                 <div className='mb-3'>
                     {recipe.ingredients.split(",")?.map((ingredient, index)=> <Ingredient key={index} ingredient={ingredient} />)}
                 </div>
-                <div className="card-text">{recipe.recipe.slice(0, 80)}...</div>
+                <div className="card-text" dangerouslySetInnerHTML={{__html:recipe.description.slice(0, 80)+'...'}}></div>
                 {
                     !isPreview ? 
                     <>
                         <div className="btn-group mt-3" role="group" aria-label="Basic example">
-                            <Link to={`/recipe/${recipe.id}`} className="btn btn-primary">View Details</Link>
+                            <Link to={`/recipe/${recipe.slug}`} className="btn btn-primary">View Details</Link>
                             {isLoggedIn ? <Link to={`/recipe/edit/${recipe.id}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
                         </div>
                     </> : ''

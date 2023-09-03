@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Recipe from './Recipe';
 import { getAllRecipes } from '../../../hooks/fetchRecipe';
 import { Link } from 'react-router-dom';
 
 const Recipes = () => {
-  let recipes = getAllRecipes();
+  const [recipes, setRecipes] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(()=>{
+      getAllRecipes().then((data)=>{
+        setRecipes(data);
+        setIsLoading(false);
+      })
+  },[])
   return (
     <div className='row gy-3'>
         {
-          recipes.length < 1 ? 
-          <div className="alert alert-info" >
-            No Recipe found. <Link to='/recipe/new'>Add Recipe</Link>
-          </div>
-          : ''
+          isLoading ? 'Loading .....' :
+          recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} /> )
         }
-        { recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} /> ) }
     </div>
   )
 }
