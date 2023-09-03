@@ -9,6 +9,8 @@ import RecipeForm from './layouts/RecipeLayouts/RecipeForm';
 import Recipe from './layouts/RecipeLayouts/Recipe';
 import RecipeDetails from './layouts/RecipeLayouts/RecipeDetails';
 import Error404 from './common/404';
+import Blogs from './blogs/Blogs';
+import BlogDetails from './blogs/BlogDetails';
 
 export const routes = [
     {
@@ -37,6 +39,14 @@ export const routes = [
                         element: <RecipeForm key="edit"/>
                     },
                 ]
+            },
+            {
+                path: '/blogs',
+                element: <Blogs/>
+            },
+            {
+                path: '/blog/:id',
+                element: <BlogDetails/>
             },
             {
                 path: '/login',

@@ -46,14 +46,17 @@ export default function Header() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className={`collapse navbar-collapse ${dropDown ? 'show' : ''}`}>
+          <ul className="navbar-nav">
           {
               isLoggedIn ?
-              <ul className="navbar-nav">
+              <>
                 <li><Link to="/recipe/new" className='nav-link px-2 text-white'>Add New Recipe</Link></li>
                 <li><Link to="/" className='nav-link px-2 text-white'>All Recipe</Link></li>
-              </ul>
+              </>
               : ''
             }
+              <li><Link to="/blogs" className='nav-link px-2 text-white'>Blogs</Link></li>
+            </ul>
           </div>
           <div className={`d-md-flex logged-btns ${dropDown ? 'responsive' : ''}`}>
             <Menus isLoggedIn={isLoggedIn} />
