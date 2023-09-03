@@ -20,11 +20,11 @@ const Recipe = ({recipe, className, isPreview}) => {
                 <div className='mb-3'>
                     {recipe.ingredients.split(",")?.map((ingredient, index)=> <Ingredient key={index} ingredient={ingredient} />)}
                 </div>
-                <p className="card-text">{recipe.recipe}</p>
+                <div className="card-text">{recipe.recipe.slice(0, 80)}...</div>
                 {
                     !isPreview ? 
                     <>
-                        <div className="btn-group" role="group" aria-label="Basic example">
+                        <div className="btn-group mt-3" role="group" aria-label="Basic example">
                             <Link to={`/recipe/${recipe.id}`} className="btn btn-primary">View Details</Link>
                             {isLoggedIn ? <Link to={`/recipe/edit/${recipe.id}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
                         </div>
