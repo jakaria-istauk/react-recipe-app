@@ -10,7 +10,6 @@ export const getAllRecipes = async (params) => {
 		url = url + '/' + params.id;
 	}
 
-    console.log(url);
     let apiData = await fetch(url).then(( res ) => {
 		if( ! res.ok ) {
 			throw new Error('Data fetching error');
@@ -24,7 +23,6 @@ export const getAllRecipes = async (params) => {
 export const getRecipeByIdSlug = async (params) => {
     let url = baseUrl + '/recipe/'+ params.id;
 
-    console.log(url);
     let apiData = await fetch(url).then(( res ) => {
 		if( ! res.ok ) {
 			throw new Error('Data fetching error');

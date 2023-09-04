@@ -12,7 +12,6 @@ const RecipeDetails = () => {
         getRecipeByIdSlug(params).then((data)=>{
             updateRecipe(data);
             setIsLoading(false);
-            console.log(data, 'recipe');
         });
     },[])
     return (

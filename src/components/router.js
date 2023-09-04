@@ -23,22 +23,22 @@ export const routes = [
                 element: <ProtectedContent/>,
                 children:[
                     {
-                        index: true,
-                        element: <Recipes/>
-                    },
-                    {
                         path: '/recipe/new',
                         element: <RecipeForm key="add"/>
-                    },
-                    {
-                        path: '/recipe/:id',
-                        element: <RecipeDetails/>
                     },
                     {
                         path: '/recipe/edit/:id',
                         element: <RecipeForm key="edit"/>
                     },
                 ]
+            },
+            {
+                index: true,
+                element: <Recipes/>
+            },
+            {
+                path: '/recipe/:id',
+                element: <RecipeDetails/>
             },
             {
                 path: '/blogs',
