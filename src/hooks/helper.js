@@ -1,6 +1,8 @@
-
-export const stripTrailingSlash = function(str){
-    return str.replace(/\/\/*/g,"/").replace(/\/+$/,"");
+import {baseSite} from '../config';
+export const stripTrailingSlashFromUrl = function(url) {
+    if (url.endsWith('/')) {
+        return url.slice(0, -1);
+    }
+    return url;
 }
-
-export const apiBaseUrl = 'http://wp-api.test/wp-json'
+export const apiBaseUrl = stripTrailingSlashFromUrl(baseSite)+'/wp-json';

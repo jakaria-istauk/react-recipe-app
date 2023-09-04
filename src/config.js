@@ -1,3 +1,1 @@
-export default config = {
-    baseSite : 'http://wp-api.test',
-}
+export const baseSite = 'http://wp-api.test';
