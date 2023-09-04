@@ -13,8 +13,10 @@
     background-color: #fff;
     border-radius: 4px;
     color: #212529 !important;
-  }
-
+}
+.recipe-loader{
+    height: 100vh;
+}
 @media (max-width: 992px){
     .logged-btns {
         display: none;
