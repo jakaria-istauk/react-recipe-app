@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getAllRecipes, getRecipeById } from '../../../hooks/fetchRecipe';
+import { getRecipeByIdSlug } from '../../../hooks/fetchRecipe';
 import Recipe from './Recipe';
 
 const RecipeDetails = () => {
     const params = useParams();
     const [recipe, updateRecipe] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    let placeholderImage = 'https://placehold.co/800?text=Recipe+Image&font=merienda';
 
     useEffect(()=>{
-        getAllRecipes(params).then((data)=>{
+        getRecipeByIdSlug(params).then((data)=>{
             updateRecipe(data);
-            console.log(useEffect);
+            setIsLoading(false);
+            console.log(data, 'recipe');
         });
     },[])
     return (
         <>
-        {"<Recipe recipe={recipe} className={`col-md-12 recipe-details`} />"}
+        {
+            isLoading ? 'Loading....' : <Recipe recipe={recipe} className={`col-md-12 recipe-details`} />
+        }
         </>
     )
 }

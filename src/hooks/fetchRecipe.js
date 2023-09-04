@@ -21,6 +21,20 @@ export const getAllRecipes = async (params) => {
     return apiData;
 }
 
+export const getRecipeByIdSlug = async (params) => {
+    let url = baseUrl + '/recipe/'+ params.id;
+
+    console.log(url);
+    let apiData = await fetch(url).then(( res ) => {
+		if( ! res.ok ) {
+			throw new Error('Data fetching error');
+		}
+
+		return res;
+	}).then((res) => res.json());
+    return apiData;
+}
+
 export const getRecipeById = (id) => {
     let recipes = getAllRecipes();
     let recipe = recipes?.filter(recipe => recipe.id == id);
