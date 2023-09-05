@@ -1,6 +1,9 @@
 import { defer } from "react-router-dom";
-import { apiBaseUrl } from "./helper";
+import { apiBaseUrl, getCookie } from "./helper";
+import axios from "axios";
 
+axios.defaults.baseURL = apiBaseUrl;
+axios.defaults.headers.common['Authorization'] = getCookie('userLogin');
 export const getAllRecipes = async (params) => {
     let url = apiBaseUrl + '/recipes';
 
@@ -29,6 +32,17 @@ export const getRecipeByIdSlug = async (params) => {
 		return res;
 	}).then((res) => res.json());
     return apiData;
+}
+
+export const createRecipe = async ( params ) => {
+    let url = apiBaseUrl + '/recipe';
+	const response = await axios.post(url, params, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    return response;
 }
 
 export const getRecipeById = (id) => {
