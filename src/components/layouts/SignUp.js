@@ -1,56 +1,48 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import { getUserByEmail, registerUser } from '../redux/reducers';
-import { isLoggedIn, setLoggedIn } from '../../hooks/authentication';
 import { redirect } from 'react-router-dom';
+import { setLoggedIn } from '../../hooks/authentication';
+import { registerUser } from '../../hooks/userApiHandler';
 
 const SignUp = () => {
     const loginPassword = useRef(null);
     const dispatchAction = useDispatch();
     const [hasUser, setHasUser] = useState(false);
-    const [isPassValid, setIsPassValid] = useState(false);
-    const [user, setUser] = useState();
+    const [isPassValid, setIsPassValid] = useState(true);
+    const [message, setMessage] = useState();
+    const [valid, setValid] = useState(true);
+    const [isSubmitted, setSubmitted] = useState(false);
 
     const handlePassword = useCallback((e) => {
-        setIsPassValid(loginPassword.current.value.length > 6);
+        setIsPassValid(loginPassword.current.value.length > 5 );
 	})
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        setSubmitted(true);
         
-        const user = {
-            name: [formData.get('firstName'), formData.get('lastName')].join(' '),
-			email: formData.get('email'),
-			password: formData.get('password'),
-		}
+        registerUser(formData).then((response)=>{
+            if( response?.status ){
+                setValid(true);
+                setLoggedIn(response);
+                window.location.replace('/');
+            }
+            else{
+                setSubmitted(false);
+                setMessage(response.message);
+                setValid(false);
+            }
 
-
-        if( user.password.length < 6 ){
-            setIsPassValid(false);
-            return;
-        }
-        
-        let theUser = getUserByEmail(user.email);
-        if( theUser ){
-            setHasUser(true);
-        }
-        else{
-            dispatchAction( registerUser(user) );
-            setLoggedIn(true);
-            window.location.replace('/');
-        }
-    }
-    if(isLoggedIn){
-        window.location.replace('/');
+        })
     }
 
   return (
     <form action="#" method='post' onSubmit={handleSubmit}>
         <div className='row justify-content-md-center'>
             <div className='card col col-lg-6 m-4 p-4'>
-            {hasUser ? <div className="alert alert-danger text-center" role="alert"> Email already exit </div> : ''}
+            {!valid ? <div className="alert alert-danger text-center" role="alert">{message}</div> : ''}
                 <div className='row g-2 mb-4'>
                     <div className="col-lg-6 form-outline">
                         <label className="form-label" htmlFor="firstName">First Name</label>
@@ -67,12 +59,21 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="loginPassword">Password</label>
-                    <input ref={loginPassword} onKeyDown={handlePassword} type="password" id="loginPassword" name='password' autoComplete='' className="form-control" required/>
-                    {!isPassValid ? <div className="invalid-feedback"> Password must have 6 characters </div> : ''}
+                    <label className="form-label" htmlFor="loginPassword">Password {isPassValid}</label>
+                    <input ref={loginPassword} onChange={handlePassword} type="password" id="loginPassword" name='password' autoComplete='' className="form-control" required/>
+                    { !isPassValid ? <div className="invalid-feedback" style={{display:'block'}}> Password must have 6 characters </div> : ''}
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block mb-4">Sign Up</button>
+                <button type="submit" className="btn btn-primary btn-block mb-4" disabled={isSubmitted || !isPassValid }>
+                    {
+                        isSubmitted ? 
+                        <>
+                        <span className="spinner-border spinner-border-sm me-2"></span>
+                        Signing up....
+                        </>
+                        : 'Sign up'
+                    }
+                </button>
 
                 <div className="text-center">
                     <p>Already a member? <Link to="/login">Login</Link></p>

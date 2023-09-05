@@ -25,7 +25,6 @@ function Login() {
                 setSubmitted(false);
                 setMessage(response.message);
                 setValid(false);
-                console.log(response);
             }
 
         })
