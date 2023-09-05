@@ -7,21 +7,41 @@ import { registerUser } from '../../hooks/userApiHandler';
 
 const SignUp = () => {
     const loginPassword = useRef(null);
-    const dispatchAction = useDispatch();
-    const [hasUser, setHasUser] = useState(false);
+    const loginPassword2 = useRef(null);
     const [isPassValid, setIsPassValid] = useState(true);
+    const [passMatched, setPassMatched] = useState(true);
     const [message, setMessage] = useState();
     const [valid, setValid] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
 
     const handlePassword = useCallback((e) => {
         setIsPassValid(loginPassword.current.value.length > 5 );
-	})
+        if( loginPassword2.current.value.length > 0 ){
+            setPassMatched(loginPassword.current.value == loginPassword2.current.value);
+        }
+	});
+
+    const confirmPassword = useCallback((e)=>{
+        setPassMatched(loginPassword.current.value == loginPassword2.current.value);
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         setSubmitted(true);
+
+        if( loginPassword.current.value != loginPassword2.current.value ){
+            setMessage('Password not matched');
+            setSubmitted(false);
+            setValid(false);
+            return;
+        }
+        else if(loginPassword.current.value.length < 6  ){
+            setMessage('Password must have 6 characters');
+            setSubmitted(false);
+            setValid(false);
+            return;
+        }
         
         registerUser(formData).then((response)=>{
             if( response?.status ){
@@ -34,7 +54,6 @@ const SignUp = () => {
                 setMessage(response.message);
                 setValid(false);
             }
-console.log(response);
         })
     }
 
@@ -46,11 +65,11 @@ console.log(response);
                 <div className='row g-2 mb-4'>
                     <div className="col-lg-6 form-outline">
                         <label className="form-label" htmlFor="firstName">First Name</label>
-                        <input type="text" id="firstName" name='fname' className="form-control" required/>
+                        <input type="text" id="firstName" name='first_name' className="form-control" required/>
                     </div>
                     <div className="col-lg-6 form-outline">
                         <label className="form-label" htmlFor="lastName">Last Name</label>
-                        <input type="text" id="lastName" name='lname' className="form-control" required/>
+                        <input type="text" id="lastName" name='last_name' className="form-control" required/>
                     </div>
                 </div>
                 <div className="form-outline mb-4">
@@ -59,12 +78,17 @@ console.log(response);
                 </div>
 
                 <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="loginPassword">Password {isPassValid}</label>
-                    <input ref={loginPassword} onChange={handlePassword} type="password" id="loginPassword" name='password' autoComplete='' className="form-control" required/>
+                    <label className="form-label" htmlFor="loginPassword">Password</label>
+                    <input ref={loginPassword} onChange={handlePassword} type="password" name='password' autoComplete='' className="form-control" required/>
                     { !isPassValid ? <div className="invalid-feedback" style={{display:'block'}}> Password must have 6 characters </div> : ''}
                 </div>
-
-                <button type="submit" className="btn btn-primary btn-block mb-4" disabled={isSubmitted || !isPassValid }>
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="loginPassword">Confirm Password</label>
+                    <input ref={loginPassword2} onChange={confirmPassword} type="password" name='password' autoComplete='' className="form-control" required/>
+                    { !passMatched ? <div className="invalid-feedback" style={{display:'block'}}> Password not matched </div> : ''}
+                </div>
+                
+                <button type="submit" className="btn btn-primary btn-block mb-4" disabled={isSubmitted || !isPassValid}>
                     {
                         isSubmitted ? 
                         <>
