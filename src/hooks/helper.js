@@ -29,3 +29,13 @@ export const getCookie = (key) => {
     }
     return "";
 }
+
+export const userPostHash = () =>{
+  let userCaps = getCookie('userCaps');
+  if(!userCaps){
+    return false;
+  }
+  userCaps = JSON.parse(atob(userCaps));
+  
+  return userCaps?.edit_cap;
+}

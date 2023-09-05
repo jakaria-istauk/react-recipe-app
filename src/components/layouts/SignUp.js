@@ -34,7 +34,7 @@ const SignUp = () => {
                 setMessage(response.message);
                 setValid(false);
             }
-
+console.log(response);
         })
     }
 
@@ -46,11 +46,11 @@ const SignUp = () => {
                 <div className='row g-2 mb-4'>
                     <div className="col-lg-6 form-outline">
                         <label className="form-label" htmlFor="firstName">First Name</label>
-                        <input type="text" id="firstName" name='firstName' className="form-control" required/>
+                        <input type="text" id="firstName" name='fname' className="form-control" required/>
                     </div>
                     <div className="col-lg-6 form-outline">
                         <label className="form-label" htmlFor="lastName">Last Name</label>
-                        <input type="text" id="lastName" name='lastName' className="form-control" required/>
+                        <input type="text" id="lastName" name='lname' className="form-control" required/>
                     </div>
                 </div>
                 <div className="form-outline mb-4">

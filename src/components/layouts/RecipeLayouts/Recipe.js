@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { isLoggedIn } from '../../../hooks/authentication'
+import { userPostHash } from '../../../hooks/helper'
 
 const Ingredient = ({ingredient}) => {
     return(
@@ -9,6 +10,7 @@ const Ingredient = ({ingredient}) => {
 }
 
 const Recipe = ({recipe, className, isPreview}) => {
+    let userCanEdit = userPostHash();
     let placeholderImage = 'https://placehold.co/800?text=Recipe+Image&font=merienda';
   return (
     <div className={className}>
@@ -26,7 +28,7 @@ const Recipe = ({recipe, className, isPreview}) => {
                     <>
                         <div className="btn-group mt-3" role="group" aria-label="Basic example">
                             <Link to={`/recipe/${recipe.slug}`} className="btn btn-primary">View Details</Link>
-                            {isLoggedIn ? <Link to={`/recipe/edit/${recipe.slug}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
+                            {isLoggedIn && userCanEdit == recipe?.user_hash ? <Link to={`/recipe/edit/${recipe.slug}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
                         </div>
                     </> : ''
                 }
