@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import Recipe from './Recipe';
-import { getAllRecipes } from '../../../hooks/fetchRecipe';
+import { getAllRecipes } from '../../../hooks/recipeApiHandler';
 import { Link } from 'react-router-dom';
 import Loader from '../../common/Loader';
 

@@ -3,7 +3,7 @@ import Recipe from './Recipe';
 import { useDispatch } from 'react-redux';
 import { addNewRecipe, updateRecipe } from '../../redux/reducers';
 import { useParams } from 'react-router-dom';
-import { getRecipeByIdSlug } from '../../../hooks/fetchRecipe';
+import { getRecipeByIdSlug } from '../../../hooks/recipeApiHandler';
 import Loader from '../../common/Loader';
 
 const RecipeForm = () => {
@@ -17,7 +17,7 @@ const RecipeForm = () => {
             image: 'https://placehold.co/800?text=Recipe+Image&font=merienda',
             title: 'Recipe Name',
             ingredients: 'Ingredients 1, Ingredients 2, Ingredients 3',
-            recipe: 'This recipe made with this process'
+            description: 'This recipe made with this process'
         }
     );
 
@@ -37,25 +37,23 @@ const RecipeForm = () => {
             });
         },[])
     }
+    else{
+        useEffect(()=>{
+            setIsLoading(false);
+        })
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        
-        const newRecipe = {
-            id: !isEditMode ? Date.now() : formData.get('id'),
-            title: formData.get('title'),
-			image: formData.get('image'),
-			ingredients: formData.get('ingredients'),
-            recipe: formData.get('recipe')
-		}
+        console.log(formData);
 
-        if(!isEditMode){
-            dispatchAction( addNewRecipe(newRecipe) );
-        }
-        else{
-            dispatchAction( updateRecipe(newRecipe) );
-        }
+        // if(!isEditMode){
+        //     dispatchAction( addNewRecipe(newRecipe) );
+        // }
+        // else{
+        //     dispatchAction( updateRecipe(newRecipe) );
+        // }
     }
 
   return (
@@ -83,7 +81,7 @@ const RecipeForm = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="recipe" className="col-sm-2 col-form-label">How to cook</label>
-                            <textarea defaultValue={ isEditMode ? recipe.description : ''} id="recipe" name='recipe' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5}></textarea>
+                            <textarea defaultValue={ isEditMode ? recipe.description : ''} id="recipe" name='description' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5}></textarea>
                         </div>
                         <div>
                             <button type="submit" className="btn btn-primary">{ isEditMode ? 'Update' : 'Save' } Recipe</button>
