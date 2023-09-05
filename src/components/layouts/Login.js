@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { getUserByEmail } from '../redux/reducers';
 import { isLoggedIn, setLoggedIn } from '../../hooks/authentication';
 import { redirect } from 'react-router-dom';
+import { authenticatUser } from '../../hooks/userApiHandler';
 
 function Login() {
     const [valid, setValid] = useState(true);
+    const [user, setUser] = useState(true);
     const [message, setMessage] = useState();
 
     const handleSubmit = (e) => {
@@ -18,6 +20,7 @@ function Login() {
             password: formData.get('password'),
         }
 
+        setUser(user);
         let theUser = getUserByEmail(user.email);
 
         if( theUser?.email === user.email && theUser?.password === user.password ){
@@ -26,6 +29,14 @@ function Login() {
             window.location.replace('/');
         }
     }
+
+    useEffect(()=>{
+        authenticatUser(user).then((data)=>{
+            console.log('useEffect',data)
+        //   setRecipes(data);
+        //   setIsLoading(false);
+        })
+    },[handleSubmit])
     
     if(isLoggedIn){
         window.location.replace('/');

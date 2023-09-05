@@ -1,10 +1,8 @@
 import { defer } from "react-router-dom";
 import { apiBaseUrl } from "./helper";
 
-const baseUrl = apiBaseUrl + '/recipe-api/v1';
-
 export const getAllRecipes = async (params) => {
-    let url = baseUrl + '/recipes';
+    let url = apiBaseUrl + '/recipes';
 
 	if (params?.id) {
 		url = url + '/' + params.id;
@@ -21,7 +19,7 @@ export const getAllRecipes = async (params) => {
 }
 
 export const getRecipeByIdSlug = async (params) => {
-    let url = baseUrl + '/recipe/'+ params.id;
+    let url = apiBaseUrl + '/recipe/'+ params.id;
 
     let apiData = await fetch(url).then(( res ) => {
 		if( ! res.ok ) {

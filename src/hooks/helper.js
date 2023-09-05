@@ -5,4 +5,4 @@ export const stripTrailingSlashFromUrl = function(url) {
     }
     return url;
 }
-export const apiBaseUrl = stripTrailingSlashFromUrl(baseSite)+'/wp-json';
+export const apiBaseUrl = stripTrailingSlashFromUrl(baseSite)+'/wp-json/recipe-api/v1';
