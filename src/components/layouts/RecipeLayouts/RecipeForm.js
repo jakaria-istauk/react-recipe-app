@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Recipe from './Recipe';
-import { useDispatch } from 'react-redux';
-import { addNewRecipe, updateRecipe } from '../../redux/reducers';
 import { useParams } from 'react-router-dom';
-import { createRecipe, getRecipeByIdSlug } from '../../../hooks/recipeApiHandler';
+import { createRecipe, getRecipeByIdSlug, updateRecipe } from '../../../hooks/recipeApiHandler';
 import Loader from '../../common/Loader';
 
 const RecipeForm = () => {
-    const dispatchAction = useDispatch();
     const params = useParams();
     const [pageTitle, updatePageTitle] = useState('Add a new Recipe');
     const [isEditMode, setisEditMode] = useState(false);
@@ -51,25 +48,30 @@ const RecipeForm = () => {
         e.preventDefault();
         setSubmitted(true);
         const formData = new FormData(e.target);
-        console.log(formData);
 
         if(!isEditMode){
             createRecipe(formData).then((response)=>{
-                console.log(response);
                 if( response?.status ){
-                    setSubmitted(false);
-                    setStatus(response?.data?.status);
-                    setMessage(response?.data?.message);
+                    
                 }
-                else{
-                    setSubmitted(false);
-                    setStatus(response?.data?.status);
-                    setMessage(response?.data?.message);
-                }
+                
+                setSubmitted(false);
+                setStatus(response?.data?.status);
+                setMessage(response?.data?.message);
+
+            }).catch((error)=>{
+                console.log(error)
             })
         }
         else{
-
+            updateRecipe(formData).then((response)=>{
+                if( response?.status ){
+                    updatePageTitle(`Edit ${formData.get('title')}`);
+                }
+                setSubmitted(false);
+                setStatus(response?.data?.status);
+                setMessage(response?.data?.message);
+            })
         }
     }
 

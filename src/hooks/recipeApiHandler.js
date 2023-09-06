@@ -44,6 +44,16 @@ export const createRecipe = async ( params ) => {
 
     return response;
 }
+export const updateRecipe = async ( params ) => {
+
+	const response = await axios.put('/recipe/'+params.get('id'), params, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    return response;
+}
 
 export const getRecipeById = (id) => {
     let recipes = getAllRecipes();
