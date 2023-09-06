@@ -32,6 +32,23 @@
 .dropdown-toggle{
     cursor: pointer;
 }
+.user-menu-icon{
+    width: 27px;
+    height: 23px;
+    fill: #fff;
+}
+.dropdown-item svg {
+    width: 27px;
+    height: 17px;
+    fill: #fff;
+}
+.dropdown-menu{
+    top: 30px;
+}
+footer svg{
+    height: 24px;
+    width: 24px;
+}
 @media (max-width: 992px){
     .logged-btns {
         display: none;
