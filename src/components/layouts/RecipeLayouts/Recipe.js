@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { isLoggedIn } from '../../../hooks/authentication'
 import { userPostHash } from '../../../hooks/helper'
@@ -12,6 +12,13 @@ const Ingredient = ({ingredient}) => {
 const Recipe = ({recipe, className, isPreview}) => {
     let userCanEdit = userPostHash();
     let placeholderImage = 'https://placehold.co/800?text=Recipe+Image&font=merienda';
+    
+    const deletePost = useCallback(()=>{
+        if(userCanEdit != recipe?.user_hash) return;
+        alert('Are your sure');
+    })
+
+
   return (
     <div className={className}>
         <div className="card">
@@ -26,9 +33,12 @@ const Recipe = ({recipe, className, isPreview}) => {
                 {
                     !isPreview ? 
                     <>
-                        <div className="btn-group mt-3" role="group" aria-label="Basic example">
-                            <Link to={`/recipe/${recipe.slug}`} className="btn btn-primary">View Details</Link>
-                            {isLoggedIn && userCanEdit == recipe?.user_hash ? <Link to={`/recipe/edit/${recipe.slug}`} className="btn btn-outline-primary">Edit Recipe</Link> : ''}
+                        <div className='d-flex justify-content-center mt-3'>
+                            <div className="btn-group">
+                                <Link to={`/recipe/${recipe.slug}`} className="btn btn-primary btn-sm">View Details</Link>
+                                {isLoggedIn && userCanEdit == recipe?.user_hash ? <Link to={`/recipe/edit/${recipe.slug}`} className="btn btn-outline-primary btn-sm">Edit</Link> : ''}
+                                {isLoggedIn && userCanEdit == recipe?.user_hash ? <button onClick={deletePost} className="btn btn-outline-danger btn-sm">Delete</button> : ''}
+                            </div>
                         </div>
                     </> : ''
                 }
