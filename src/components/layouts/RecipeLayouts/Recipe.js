@@ -22,7 +22,7 @@ const Recipe = ({recipe, className, isPreview}) => {
                 <div className='mb-3'>
                     {recipe.ingredients.split(",")?.map((ingredient, index)=> <Ingredient key={index} ingredient={ingredient} />)}
                 </div>
-                <div className="card-text" dangerouslySetInnerHTML={{__html: recipe.description.slice(0, isPreview ? 400 : 80 )+'...' }}></div>
+                <div className="card-text" dangerouslySetInnerHTML={{__html: recipe.instructions.slice(0, isPreview ? 400 : 80 )+'...' }}></div>
                 {
                     !isPreview ? 
                     <>

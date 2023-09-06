@@ -20,7 +20,7 @@ const RecipeForm = () => {
             image: 'https://placehold.co/800?text=Recipe+Image&font=merienda',
             title: 'Recipe Name',
             ingredients: 'Ingredients 1, Ingredients 2, Ingredients 3',
-            description: 'This recipe made with this process'
+            instructions: 'This recipe made with this process'
         }
     );
 
@@ -98,7 +98,7 @@ const RecipeForm = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="recipe" className="col-sm-2 col-form-label">How to cook</label>
-                            <textarea defaultValue={ isEditMode ? recipe.description : ''} id="recipe" name='description' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5} required></textarea>
+                            <textarea defaultValue={ isEditMode ? recipe.instructions : ''} id="recipe" name='instructions' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5} required></textarea>
                         </div>
                         <div>
                             <button type="submit" className="btn btn-primary" disabled={isSubmitted}>
