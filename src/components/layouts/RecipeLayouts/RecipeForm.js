@@ -3,6 +3,7 @@ import Recipe from './Recipe';
 import { useParams } from 'react-router-dom';
 import { createRecipe, getRecipeByIdSlug, updateRecipe } from '../../../hooks/recipeApiHandler';
 import Loader from '../../common/Loader';
+import Alert from '../../common/Alert';
 
 const RecipeForm = () => {
     const params = useParams();
@@ -81,6 +82,7 @@ const RecipeForm = () => {
         isLoading ? <Loader /> :
     
         <form action="#" method='post' onSubmit={handleSubmit}> 
+            {message ? <Alert key={Date.now()} message={message} type="success" closable={false} /> : ''}
             <h1 className="display-6 text-center mb-4">{pageTitle}</h1>
             <div className='row'>
                 <div className='col-md-8'>
