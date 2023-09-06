@@ -55,6 +55,11 @@ export const updateRecipe = async ( params ) => {
     return response;
 }
 
+export const deleteRecipeByID = async (id) => {
+	const response = await axios.delete('/recipe/'+id);
+	return response;
+}
+
 export const getRecipeById = (id) => {
     let recipes = getAllRecipes();
     let recipe = recipes?.filter(recipe => recipe.id == id);

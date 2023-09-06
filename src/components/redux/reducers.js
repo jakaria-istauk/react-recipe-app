@@ -30,7 +30,8 @@ export const recipeSlice = createSlice({
             state.push(action.payload);
         },
         updateRecipe: (state, action) => {
-            state.map(item => console.log(item))
+            console.log(action.payload);
+            return state.filter((item) => item.id !== action.payload);
         }
     }
 });
