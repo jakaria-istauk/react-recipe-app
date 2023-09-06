@@ -31,13 +31,25 @@ export const getCookie = (key) => {
 }
 
 export const userPostHash = () =>{
+  return getUserData('edit_cap');
+}
+
+export const recipeImagePlaceHolder = 'https://placehold.co/800?text=Recipe+Image&font=merienda';
+
+export const getUserData = (key) => {
   let userCaps = getCookie('userCaps');
-  if(!userCaps){
+  if(!userCaps || !key){
     return false;
   }
   userCaps = JSON.parse(atob(userCaps));
-  
-  return userCaps?.edit_cap;
+  return userCaps?.[key];
 }
 
-export const recipeImagePlaceHolder = 'https://placehold.co/800?text=Recipe+Image&font=merienda'
+export const getUserFullName = () => {
+  let fullName = getUserData('full_name');
+  fullName = fullName?.first_name + " " + fullName?.last_name;
+  if(!fullName){
+    fullName = getUserData('user_name')
+  }
+  return fullName;
+}
