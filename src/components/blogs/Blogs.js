@@ -13,7 +13,6 @@ const Blogs = () => {
             setIsLoading(false);
         })
     },[])
-    console.log(posts);
   return (
     <>
     {
