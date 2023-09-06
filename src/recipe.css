@@ -5,6 +5,9 @@
 .recipe-details .image-square{
     height: auto;
 }
+.recipe-details-page img{
+    cursor: pointer;
+}
 .recipe-logo{
     height: 50px;
     width: 50px;

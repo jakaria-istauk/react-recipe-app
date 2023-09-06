@@ -39,3 +39,5 @@ export const userPostHash = () =>{
   
   return userCaps?.edit_cap;
 }
+
+export const recipeImagePlaceHolder = 'https://placehold.co/800?text=Recipe+Image&font=merienda'
