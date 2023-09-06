@@ -37,6 +37,7 @@ const RecipeForm = () => {
                 setRecipe(data);
                 setIsLoading(false);
                 setisEditMode(true);
+                updatePageTitle(`Edit ${data?.title}`)
             });
         },[])
     }
@@ -89,7 +90,7 @@ const RecipeForm = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="image" className="col-sm-2 col-form-label">Image Url</label>
-                            <input defaultValue={ isEditMode ? recipe.image : ''} id="image" name='image' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
+                            <input defaultValue={ isEditMode ? recipe.image : ''} id="image" name='image_url' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="ingredients" className="col-sm-2 col-form-label">Ingredients</label>

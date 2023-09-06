@@ -4,6 +4,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = apiBaseUrl;
 axios.defaults.headers.common['Authorization'] = getCookie('userLogin');
+
 export const getAllRecipes = async (params) => {
     let url = apiBaseUrl + '/recipes';
 
@@ -35,8 +36,7 @@ export const getRecipeByIdSlug = async (params) => {
 }
 
 export const createRecipe = async ( params ) => {
-    let url = apiBaseUrl + '/recipe';
-	const response = await axios.post(url, params, {
+	const response = await axios.post('/recipe', params, {
         headers: {
             'Content-Type': 'application/json'
         }
