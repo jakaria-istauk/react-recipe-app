@@ -6,21 +6,22 @@ import Loader from '../../common/Loader';
 import Alert from '../../common/Alert';
 
 const RecipeForm = () => {
+    const recipePlaceHolder = {
+        image: 'https://placehold.co/800?text=Recipe+Image&font=merienda',
+        title: 'Recipe Name',
+        ingredients: 'Ingredients 1, Ingredients 2, Ingredients 3',
+        instructions: 'This recipe made with this process'
+    };
+
     const params = useParams();
     const [pageTitle, updatePageTitle] = useState('Add a new Recipe');
     const [isEditMode, setisEditMode] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
-    const [message, setMessage] = useState();
-    const [statue, setStatus] = useState();
-    const [recipe, setRecipe] = useState(
-        {
-            image: 'https://placehold.co/800?text=Recipe+Image&font=merienda',
-            title: 'Recipe Name',
-            ingredients: 'Ingredients 1, Ingredients 2, Ingredients 3',
-            instructions: 'This recipe made with this process'
-        }
-    );
+    const [message, setMessage] = useState(false);
+    const [status, setStatus] = useState();
+    const [recipe, setRecipe] = useState(recipePlaceHolder);
+    const [formDefault, setFormDefault] = useState();
 
     const handlePreview = useCallback(e => {
         setRecipe({
@@ -33,6 +34,7 @@ const RecipeForm = () => {
         useEffect(()=>{
             getRecipeByIdSlug(params).then((data)=>{
                 setRecipe(data);
+                setFormDefault(data);
                 setIsLoading(false);
                 setisEditMode(true);
                 updatePageTitle(`Edit ${data?.title}`)
@@ -53,7 +55,9 @@ const RecipeForm = () => {
         if(!isEditMode){
             createRecipe(formData).then((response)=>{
                 if( response?.status ){
-                    
+                    setRecipe(recipePlaceHolder);
+                    setFormDefault({});
+                    setStatus(Date.now());
                 }
                 
                 setSubmitted(false);
@@ -81,28 +85,28 @@ const RecipeForm = () => {
     {
         isLoading ? <Loader /> :
     
-        <form action="#" method='post' onSubmit={handleSubmit}> 
+        <form action="#" method='post' onSubmit={handleSubmit}>
             {message ? <Alert key={Date.now()} message={message} type="success" closable={false} /> : ''}
             <h1 className="display-6 text-center mb-4">{pageTitle}</h1>
             <div className='row'>
-                <div className='col-md-8'>
+                <div className='col-md-8' key={status}>
                     <div className='card p-4'>
                         { isEditMode ? <input type='hidden' name='id' defaultValue={recipe?.id} /> : '' }
                         <div className="mb-3">
                             <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
-                            <input defaultValue={ isEditMode ? recipe.title : ''} id="name" name='title' type="text" className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} required/>
+                            <input defaultValue={formDefault?.title} id="name" name='title' type="text" className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="image" className="col-sm-2 col-form-label">Image Url</label>
-                            <input defaultValue={ isEditMode ? recipe.image : ''} id="image" name='image_url' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
+                            <input defaultValue={formDefault?.image} id="image" name='image' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="ingredients" className="col-sm-2 col-form-label">Ingredients</label>
-                            <input defaultValue={ isEditMode ? recipe.ingredients : ''} id="ingredients" name='ingredients' type="text" className="form-control-plaintext border p-2 rounded" placeholder='Ingredients 1, Ingredients 2, Ingredients 3' onKeyUp={handlePreview} required/>
+                            <input defaultValue={formDefault?.ingredients} id="ingredients" name='ingredients' type="text" className="form-control-plaintext border p-2 rounded" placeholder='Ingredients 1, Ingredients 2, Ingredients 3' onKeyUp={handlePreview} required/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="recipe" className="col-sm-2 col-form-label">How to cook</label>
-                            <textarea defaultValue={ isEditMode ? recipe.instructions : ''} id="recipe" name='instructions' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5} required></textarea>
+                            <textarea defaultValue={formDefault?.instructions} id="recipe" name='instructions' className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} rows={5} required></textarea>
                         </div>
                         <div>
                             <button type="submit" className="btn btn-primary" disabled={isSubmitted}>
