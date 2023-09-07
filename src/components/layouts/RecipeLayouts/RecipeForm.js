@@ -50,7 +50,7 @@ const RecipeForm = () => {
     if(params?.id){
         useEffect(()=>{
             getRecipeByIdSlug(params).then((data)=>{
-                if(data?.status){
+                if(data?.id){
                     setRecipe(data);
                     setFormDefault(data);
                     setIsLoading(false);

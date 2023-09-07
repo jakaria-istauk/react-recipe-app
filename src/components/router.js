@@ -11,6 +11,8 @@ import RecipeDetails from './layouts/RecipeLayouts/RecipeDetails';
 import Error404 from './common/404';
 import Blogs from './blogs/Blogs';
 import BlogDetails from './blogs/BlogDetails';
+import Profile from './profile/Profile';
+import ProfileEdit from './profile/ProfileEdit';
 
 export const routes = [
     {
@@ -29,6 +31,14 @@ export const routes = [
                     {
                         path: '/recipe/edit/:id',
                         element: <RecipeForm key="edit"/>
+                    },
+                    {
+                        path: '/profile',
+                        element: <Profile/>
+                    },
+                    {
+                        path: '/profile/Edit',
+                        element: <ProfileEdit/>
                     },
                 ]
             },

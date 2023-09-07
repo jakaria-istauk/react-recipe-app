@@ -49,6 +49,14 @@ footer svg{
     height: 24px;
     width: 24px;
 }
+.profile-temp-style{
+    background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+    height: 400px;
+}
+.profile-temp-style .mask{
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+}
 @media (max-width: 992px){
     .logged-btns {
         display: none;
