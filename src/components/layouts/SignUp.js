@@ -83,8 +83,8 @@ const SignUp = () => {
                     { !isPassValid ? <div className="invalid-feedback" style={{display:'block'}}> Password must have 6 characters </div> : ''}
                 </div>
                 <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="loginPassword">Confirm Password</label>
-                    <input ref={loginPassword2} onChange={confirmPassword} type="password" name='password' autoComplete='' className="form-control" required/>
+                    <label className="form-label" htmlFor="loginPassword2">Confirm Password</label>
+                    <input ref={loginPassword2} onChange={confirmPassword} type="password" name='password2' autoComplete='' className="form-control" required/>
                     { !passMatched ? <div className="invalid-feedback" style={{display:'block'}}> Password not matched </div> : ''}
                 </div>
                 

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Recipe from './Recipe';
 import { useParams } from 'react-router-dom';
-import { createRecipe, getRecipeByIdSlug, updateRecipe } from '../../../hooks/recipeApiHandler';
+import { createRecipe, getRecipeByIdSlug, processMediaData, updateRecipe } from '../../../hooks/recipeApiHandler';
 import Loader from '../../common/Loader';
 import Alert from '../../common/Alert';
 
@@ -20,14 +20,31 @@ const RecipeForm = () => {
     const [isSubmitted, setSubmitted] = useState(false);
     const [message, setMessage] = useState(false);
     const [status, setStatus] = useState();
+    const [formKey, setFormKey] = useState();
     const [recipe, setRecipe] = useState(recipePlaceHolder);
     const [formDefault, setFormDefault] = useState();
+    const [imgaeSrcType, setSrcImageType] = useState('url');
+    const [imageFile, setImageFile] = useState();
 
     const handlePreview = useCallback(e => {
-        setRecipe({
-            ...recipe,
-            [e.target.name]: e.target.value
-        });
+        setMessage(false);
+        if(e.target.name == 'image' && e.target.files ){
+            processMediaData(e.target.files[0]).then((response)=>{
+                setImageFile(response);
+                setRecipe({
+                    ...recipe,
+                    [e.target.name]: response
+                });
+            })
+            
+        }
+        else{
+            setRecipe({
+                ...recipe,
+                [e.target.name]: e.target.value
+            });
+        }
+        
     });
 
     if(params?.id){
@@ -47,21 +64,29 @@ const RecipeForm = () => {
         })
     }
 
+    const switchImgaeUploadType = useCallback((e)=>{
+        setSrcImageType(e.target.value);
+    })
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
         const formData = new FormData(e.target);
+        if(formData.get('image_src_type')=='file'){
+            formData.set('image', imageFile);
+        }
+        setFormDefault(formData);
 
         if(!isEditMode){
             createRecipe(formData).then((response)=>{
-                if( response?.status ){
+                if( response?.data?.status ){
                     setRecipe(recipePlaceHolder);
                     setFormDefault({});
-                    setStatus(Date.now());
+                    setFormKey(Date.now());
                 }
-                
-                setSubmitted(false);
+
                 setStatus(response?.data?.status);
+                setSubmitted(false);
                 setMessage(response?.data?.message);
 
             }).catch((error)=>{
@@ -73,6 +98,7 @@ const RecipeForm = () => {
                 if( response?.status ){
                     updatePageTitle(`Edit ${formData.get('title')}`);
                 }
+                console.log(response, 'update');
                 setSubmitted(false);
                 setStatus(response?.data?.status);
                 setMessage(response?.data?.message);
@@ -86,10 +112,10 @@ const RecipeForm = () => {
         isLoading ? <Loader /> :
     
         <form action="#" method='post' onSubmit={handleSubmit}>
-            {message ? <Alert key={Date.now()} message={message} type="success" closable={false} /> : ''}
+            {message ? <Alert key={Date.now()} message={message} type={status?'success':'danger'} closable={!status} /> : ''}
             <h1 className="display-6 text-center mb-4">{pageTitle}</h1>
             <div className='row'>
-                <div className='col-md-8' key={status}>
+                <div className='col-md-8' key={formKey}>
                     <div className='card p-4'>
                         { isEditMode ? <input type='hidden' name='id' defaultValue={recipe?.id} /> : '' }
                         <div className="mb-3">
@@ -97,8 +123,14 @@ const RecipeForm = () => {
                             <input defaultValue={formDefault?.title} id="name" name='title' type="text" className="form-control-plaintext border p-2 rounded" onKeyUp={handlePreview} required/>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="image" className="col-sm-2 col-form-label">Image Url</label>
-                            <input defaultValue={formDefault?.image} id="image" name='image' type="text" className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
+                            <label htmlFor="image" className="d-flex col-sm-6 col-form-label">
+                                Image
+                                <select value={formDefault?.image_src_type} onChange={switchImgaeUploadType} className="form-select form-select-sm ms-1" name='image_src_type'>
+                                    <option value="url">From Url</option>
+                                    <option value="file">From Computer</option>
+                                </select>
+                            </label>
+                            <input defaultValue={formDefault?.image} id="image" name='image' accept="image/*" type={imgaeSrcType=='url'?'text':imgaeSrcType} className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="ingredients" className="col-sm-2 col-form-label">Ingredients</label>
