@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { isLoggedIn, setLoggedOut } from '../../hooks/authentication';
 import { redirect } from 'react-router-dom';
-import { getUserFullName } from '../../hooks/helper';
+import { getUserData, getUserFullName } from '../../hooks/helper';
 
 export default function Header() {
   const [dropDown, setDropDown] = useState(false);
@@ -36,7 +36,7 @@ export default function Header() {
           <div className={`collapse navbar-collapse ${collaps ? 'show' : ''}`}>
           <ul className="navbar-nav">
           {
-              isLoggedIn ?
+              isLoggedIn && getUserData('post_cap') ?
               <>
                 <li><Link to="/recipe/new" className='nav-link px-2 text-white'>Add New Recipe</Link></li>
               </>

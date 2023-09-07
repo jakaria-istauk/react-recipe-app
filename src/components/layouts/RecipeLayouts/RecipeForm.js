@@ -50,11 +50,13 @@ const RecipeForm = () => {
     if(params?.id){
         useEffect(()=>{
             getRecipeByIdSlug(params).then((data)=>{
-                setRecipe(data);
-                setFormDefault(data);
-                setIsLoading(false);
-                setisEditMode(true);
-                updatePageTitle(`Edit ${data?.title}`)
+                if(data?.status){
+                    setRecipe(data);
+                    setFormDefault(data);
+                    setIsLoading(false);
+                    setisEditMode(true);
+                    updatePageTitle(`Edit ${data?.title}`)
+                }
             });
         },[])
     }
