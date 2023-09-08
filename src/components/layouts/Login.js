@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { getUserByEmail } from '../redux/reducers';
-import { isLoggedIn, setLoggedIn } from '../../hooks/authentication';
-import { redirect } from 'react-router-dom';
+import { setLoggedIn } from '../../hooks/authentication';
 import { authenticatUser } from '../../hooks/userApiHandler';
-import { setCookie } from '../../hooks/helper';
 
 function Login() {
     const [valid, setValid] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
     const [message, setMessage] = useState();
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -37,7 +34,7 @@ function Login() {
             <div className='card col col-lg-6 m-4 p-4'>
             {!valid ? <div className="alert alert-danger text-center" role="alert">{message}</div> : ''}
                 <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="loginName">Email or username</label>
+                    <label className="form-label" htmlFor="loginName">Email</label>
                     <input type="email" name='email' id="loginName" className="form-control" required/>
                 </div>
 

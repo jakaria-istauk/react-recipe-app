@@ -1,7 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { redirect } from 'react-router-dom';
 import { setLoggedIn } from '../../hooks/authentication';
 import { registerUser } from '../../hooks/userApiHandler';
 

@@ -72,7 +72,7 @@ const RecipeDetails = () => {
                         {recipe.ingredients.split(",")?.map((ingredient, index)=> <Ingredient key={index} ingredient={ingredient} />)}
                     </div>
                     <img title={fullImage?'Click to collaps':'click to see full image'} onClick={imageHightHandler} src={recipe.image ? recipe.image : recipeImagePlaceHolder} className={`card-img-top image-${fullImage?'':'square'}`} alt={recipe.title}/>
-                    <div className="card-text my-5" dangerouslySetInnerHTML={{__html: recipe.instructions }}></div>
+                    <div className="card-text mt-4" dangerouslySetInnerHTML={{__html: recipe.instructions }}></div>
                 </div>
             </div>
         }

@@ -1,5 +1,3 @@
-import { defer } from "react-router-dom";
-
 const baseUrl = 'http://wp-api.test/wp-json/wp/v2';
 
 export const getPost = async (params) => {

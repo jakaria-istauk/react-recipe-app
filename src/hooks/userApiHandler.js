@@ -1,10 +1,11 @@
 import axios from "axios";
 import { apiBaseUrl } from "./helper";
 
-export const authenticatUser = async (params) => {
-    let url = apiBaseUrl + '/user/login';
+axios.defaults.baseURL = apiBaseUrl;
 
-    const response = await axios.post(url, params, {
+export const authenticatUser = async (params) => {
+
+    const response = await axios.post('/user/login', params, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -14,9 +15,8 @@ export const authenticatUser = async (params) => {
 }
 
 export const registerUser = async (params) => {
-    let url = apiBaseUrl + '/user/signup';
 
-    const response = await axios.post(url, params, {
+    const response = await axios.post('/user/signup', params, {
         headers: {
             'Content-Type': 'application/json'
         },

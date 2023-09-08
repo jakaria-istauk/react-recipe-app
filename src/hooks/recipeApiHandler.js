@@ -1,4 +1,3 @@
-import { defer } from "react-router-dom";
 import { apiBaseUrl, getCookie } from "./helper";
 import axios from "axios";
 
