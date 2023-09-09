@@ -48,7 +48,7 @@ export const getUserData = (key) => {
 export const getUserFullName = () => {
   let fullName = getUserData('full_name');
   fullName = fullName?.first_name + " " + fullName?.last_name;
-  if(!fullName){
+  if(fullName !== " "){
     fullName = getUserData('user_name')
   }
   return fullName;
