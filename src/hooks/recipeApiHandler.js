@@ -5,33 +5,21 @@ axios.defaults.baseURL = apiBaseUrl;
 axios.defaults.headers.common['Authorization'] = getCookie('userLogin');
 
 export const getAllRecipes = async (params) => {
-    let url = apiBaseUrl + '/recipes';
-
-	if (params?.id) {
-		url = url + '/' + params.id;
-	}
-
-    let apiData = await fetch(url).then(( res ) => {
-		if( ! res.ok ) {
-			throw new Error('Data fetching error');
-		}
-
+    let apiData = await axios.get('/recipes').then(( res ) => {
 		return res;
-	}).then((res) => res.json());
-    return apiData;
+	}).catch((error) => {
+
+    });
+    return apiData?.data;
 }
 
 export const getRecipeByIdSlug = async (params) => {
-    let url = apiBaseUrl + '/recipe/'+ params.id;
-
-    let apiData = await fetch(url).then(( res ) => {
-		if( ! res.ok ) {
-			throw new Error('Data fetching error');
-		}
-
+    let apiData = await axios.get('/recipe/'+ params.id).then(( res ) => {
 		return res;
-	}).then((res) => res.json());
-    return apiData;
+	}).catch((error) => {
+
+    });
+    return apiData?.data;
 }
 
 export const createRecipe = async ( params ) => {

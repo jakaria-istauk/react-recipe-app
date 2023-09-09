@@ -1,7 +1,8 @@
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://wp-api.test/wp-json/wp/v2';
-
+const blogAxios = axios.create({
+	baseURL: 'http://wp-api.test/wp-json/wp/v2'
+});
 export const getPost = async (params) => {
     let url = '/posts';
 	let query_params = {};
@@ -16,7 +17,7 @@ export const getPost = async (params) => {
 		query_params.page = params?.page;
 	}
 
-    let apiData = await axios.get(url,{params:query_params}).then(( res ) => {
+    let apiData = await blogAxios.get(url,{params:query_params}).then(( res ) => {
 		return res;
 	}).catch((res) => {
 		// console.log(res, 'catch');
