@@ -4,7 +4,7 @@ import { isLoggedIn } from '../../hooks/authentication';
 
 const Blog = ({post, className, isPreview}) => {
     let placeholderImage = 'https://placehold.co/800?text=Blog+Image&font=merienda';
-    const content = {__html:post.content.rendered.slice(0,80)+'...'};
+    const content = {__html:post?.content?.rendered.slice(0,80)+'...'};
   return (
     <div className={className}>
         <div className="card">
@@ -18,7 +18,7 @@ const Blog = ({post, className, isPreview}) => {
                     <>
                         <div className="btn-group" role="group" aria-label="Basic example">
                             <Link to={`/blog/${post.id}`} className="btn btn-primary">View Details</Link>
-                            {isLoggedIn ? <Link to={`/blog/edit/${post.id}`} className="btn btn-outline-primary">Edit Post</Link> : ''}
+                            {/* {isLoggedIn ? <Link to={`/blog/edit/${post.id}`} className="btn btn-outline-primary">Edit Post</Link> : ''} */}
                         </div>
                     </> : ''
                 }
