@@ -23,7 +23,7 @@ const RecipeForm = () => {
     const [formKey, setFormKey] = useState();
     const [recipe, setRecipe] = useState(recipePlaceHolder);
     const [formDefault, setFormDefault] = useState();
-    const [imgaeSrcType, setSrcImageType] = useState('url');
+    const [imageSrcType, setImageSrcType] = useState('url');
     const [imageFile, setImageFile] = useState();
 
     const handlePreview = useCallback(e => {
@@ -56,6 +56,7 @@ const RecipeForm = () => {
                     setIsLoading(false);
                     setisEditMode(true);
                     updatePageTitle(`Edit ${data?.title}`)
+                    setImageSrcType(data?.image_src_type);
                 }
             });
         },[])
@@ -67,7 +68,7 @@ const RecipeForm = () => {
     }
 
     const switchImgaeUploadType = useCallback((e)=>{
-        setSrcImageType(e.target.value);
+        setImageSrcType(e.target.value);
     })
 
     const handleSubmit = (e) => {
@@ -100,7 +101,6 @@ const RecipeForm = () => {
                 if( response?.status ){
                     updatePageTitle(`Edit ${formData.get('title')}`);
                 }
-                console.log(response, 'update');
                 setSubmitted(false);
                 setStatus(response?.data?.status);
                 setMessage(response?.data?.message);
@@ -127,12 +127,12 @@ const RecipeForm = () => {
                         <div className="mb-3">
                             <label htmlFor="image" className="d-flex col-sm-6 col-form-label">
                                 Image
-                                <select value={formDefault?.image_src_type} onChange={switchImgaeUploadType} className="form-select form-select-sm ms-1" name='image_src_type'>
+                                <select value={imageSrcType} onChange={switchImgaeUploadType} className="form-select form-select-sm ms-1" name='image_src_type'>
                                     <option value="url">From Url</option>
                                     <option value="file">From Computer</option>
                                 </select>
                             </label>
-                            <input defaultValue={formDefault?.image} id="image" name='image' accept="image/*" type={imgaeSrcType=='url'?'text':imgaeSrcType} className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
+                            <input defaultValue={imageSrcType=='url'?formDefault?.image:''} id="image" name='image' accept="image/*" type={imageSrcType=='url'?'text':imageSrcType} className="form-control-plaintext border p-2 rounded" onChange={handlePreview} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="ingredients" className="col-sm-2 col-form-label">Ingredients</label>
