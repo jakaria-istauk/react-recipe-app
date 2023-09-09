@@ -8,6 +8,7 @@ const Blogs = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [paging, setPaging] = useState(parseInt(2));
+    const [btnText, setBtnText] = useState('Load More');
     const per_page = 8;
 
     useEffect(()=>{
@@ -21,14 +22,19 @@ const Blogs = () => {
 
     const loadeMorePosts = useCallback((e)=>{
       setIsLoadingMore(true);
+      setBtnText('Loading...');
       let paging = parseInt(e.target.getAttribute('data-paging'));
       getPost({page:paging,per_page:per_page}).then((data)=>{
           if(data){
             setPosts([...posts,...data]);
             setPaging(paging+1);
             setIsLoadingMore(false);
+            setBtnText('Load More');
           }else{
-            setPaging(0);
+            setBtnText('No More blog Found');
+            setTimeout(()=>{
+              setPaging(0);
+            },2500);
           }
       })
     })
@@ -46,9 +52,9 @@ const Blogs = () => {
                   isLoadingMore ? 
                   <>
                   <span className="spinner-border spinner-border-sm me-2"></span>
-                  Loading....
+                  {btnText}
                   </>
-                  : "Load More"
+                  : <>{btnText}</>
               }
               </button>
             </div> : ''
