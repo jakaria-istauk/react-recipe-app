@@ -5,7 +5,16 @@ axios.defaults.baseURL = apiBaseUrl;
 axios.defaults.headers.common['Authorization'] = getCookie('userLogin');
 
 export const getAllRecipes = async (params) => {
-    let apiData = await axios.get('/recipes').then(( res ) => {
+	let query_params = {};
+
+	if(params?.per_page){
+		query_params.per_page = params?.per_page;
+	}
+	if(params?.page){
+		query_params.page = params?.page;
+	}
+    
+    let apiData = await axios.get('/recipes',{params:query_params}).then(( res ) => {
 		return res;
 	}).catch((error) => {
 
