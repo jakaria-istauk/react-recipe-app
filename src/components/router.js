@@ -33,6 +33,10 @@ export const routes = [
                         element: <RecipeForm key="edit"/>
                     },
                     {
+                        path: '/my-recipes',
+                        element: <Recipes key="my-recipes" type="my-recipes" />
+                    },
+                    {
                         path: '/profile',
                         element: <Profile/>
                     },
@@ -44,7 +48,7 @@ export const routes = [
             },
             {
                 index: true,
-                element: <Recipes/>
+                element: <Recipes key="all-recipes"/>
             },
             {
                 path: '/recipe/:id',

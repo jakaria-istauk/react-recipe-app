@@ -34,13 +34,6 @@ export default function Header() {
           </button>
           <div className={`collapse navbar-collapse ${collaps ? 'show' : ''}`}>
           <ul className="navbar-nav">
-          {
-              isLoggedIn ?
-              <>
-                <li><Link to="/recipe/new" className='nav-link px-2 text-white'>Add New Recipe</Link></li>
-              </>
-              : ''
-            }
               <li><Link to="/" className='nav-link px-2 text-white'>All Recipe</Link></li>
               <li><Link to="/blogs" className='nav-link px-2 text-white'>Blogs</Link></li>
             </ul>
@@ -64,6 +57,8 @@ export default function Header() {
                   ! dropDown ? '' :
                   <ul className={`dropdown-menu dropdown-menu-dark ${dropDown?'show':''}`}>
                     <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
+                    <li><Link className="dropdown-item" to="/my-recipes">My Recipes</Link></li>
+                    <li><Link className='dropdown-item' to="/recipe/new">Add New Recipe</Link></li>
                     <li><Link className="dropdown-item" to="/profile/edit">Edit Profile</Link></li>
                     <li>
                       <button type="button" onClick={handleLogout} className="dropdown-item btn btn-outline-light me-2">

@@ -6,7 +6,7 @@ import Loader from '../../common/Loader';
 import { updateRecipe } from '../../redux/reducers';
 import { useDispatch } from 'react-redux';
 
-const Recipes = () => {
+const Recipes = (props) => {
   const dispatchAction = useDispatch();
   const [recipes, setRecipes] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -14,9 +14,9 @@ const Recipes = () => {
   const [paging, setPaging] = useState(parseInt(2));
   const [btnText, setBtnText] = useState('Load More');
   const per_page = 8;
-
+  
   useEffect(()=>{
-      getAllRecipes({per_page:per_page}).then((data)=>{
+      getAllRecipes({per_page:per_page,author:props?.type}).then((data)=>{
         setRecipes(data);
         setIsLoading(false);
       })
@@ -26,7 +26,7 @@ const Recipes = () => {
     setIsLoadingMore(true);
     setBtnText('Loading...');
     let paging = parseInt(e.target.getAttribute('data-paging'));
-    getAllRecipes({page:paging,per_page:per_page}).then((data)=>{
+    getAllRecipes({page:paging,per_page:per_page, author:props?.type}).then((data)=>{
         if(data?.length > 0){
           setRecipes([...recipes,...data]);
           setPaging(paging+1);

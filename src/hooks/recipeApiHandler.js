@@ -1,4 +1,4 @@
-import { apiBaseUrl, getCookie } from "./helper";
+import { apiBaseUrl, getCookie, getUserData } from "./helper";
 import axios from "axios";
 
 axios.defaults.baseURL = apiBaseUrl;
@@ -13,7 +13,10 @@ export const getAllRecipes = async (params) => {
 	if(params?.page){
 		query_params.page = params?.page;
 	}
-    
+    if(params?.author){
+		query_params.author = getUserData('user_name');
+	}
+
     let apiData = await axios.get('/recipes',{params:query_params}).then(( res ) => {
 		return res;
 	}).catch((error) => {
