@@ -4,7 +4,7 @@ import { getAllRecipes } from '../../../hooks/recipeApiHandler';
 import { Link } from 'react-router-dom';
 import Loader from '../../common/Loader';
 import { updateRecipe } from '../../redux/reducers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Recipes = (props) => {
   const dispatchAction = useDispatch();
@@ -13,6 +13,7 @@ const Recipes = (props) => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [paging, setPaging] = useState(parseInt(2));
   const [btnText, setBtnText] = useState('Load More');
+  const userData = useSelector((state)=>state?.user);
   const per_page = 8;
   
   useEffect(()=>{
@@ -52,7 +53,7 @@ const Recipes = (props) => {
     <div className='row gy-3'>
         {
           isLoading ? <Loader/> :
-          recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} /> )
+          recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} user={userData}/> )
         }
         {
             paging > 0 ? 

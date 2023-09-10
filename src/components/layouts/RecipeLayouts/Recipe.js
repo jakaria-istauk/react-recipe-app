@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { isLoggedIn } from '../../../hooks/authentication'
-import { userPostHash } from '../../../hooks/helper'
 import { deleteRecipe } from '../../../hooks/recipeApiHandler'
 
 const Ingredient = ({ingredient}) => {
@@ -10,10 +8,8 @@ const Ingredient = ({ingredient}) => {
     )
 }
 
-const Recipe = ({recipe, className, isPreview, deletePost}) => {
-    let userCanEdit = userPostHash();
+const Recipe = ({recipe, className, isPreview, ...props}) => {
     let placeholderImage = 'https://placehold.co/800?text=Recipe+Image&font=merienda';
-
   return (
     <div className={className}>
         <div className="card">
@@ -31,7 +27,7 @@ const Recipe = ({recipe, className, isPreview, deletePost}) => {
                         <div className='d-flex justify-content-center mt-3'>
                             <div className="btn-group">
                                 <Link to={`/recipe/${recipe.slug}`} className="btn btn-primary btn-sm">View Details</Link>
-                                {isLoggedIn && userCanEdit == recipe?.user_hash ? <Link to={`/recipe/edit/${recipe.slug}`} className="btn btn-outline-primary btn-sm">Edit Recipe</Link> : ''}
+                                {props?.user?.postHash == recipe?.user_hash ? <Link to={`/recipe/edit/${recipe.slug}`} className="btn btn-outline-primary btn-sm">Edit Recipe</Link> : ''}
                                 {/* {isLoggedIn && userCanEdit == recipe?.user_hash ? <button onClick={deletePost} data-id={recipe.id} className="btn btn-outline-danger btn-sm">Delete</button> : ''} */}
                             </div>
                         </div>

@@ -1,12 +1,14 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import { isLoggedIn } from '../../hooks/authentication';
+import { useSelector } from 'react-redux';
 
 const ProtectedContent = () => {
+  const userData = useSelector((state)=>state?.user);
+
   return (
     <>
-    {isLoggedIn ? <Outlet/> : <Navigate to="/login" />}
+    {userData?.isLoggedIn ? <Outlet/> : <Navigate to="/login" />}
     </>
   )
 }

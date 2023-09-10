@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getUserFullName, userPostHash } from "../../hooks/helper";
+import { isLoggedIn } from "../../hooks/authentication";
 
 export const getUserByEmail = (email) => {
     let data = JSON.parse( window.localStorage.getItem( 'my_recipe_app' ) );
@@ -13,11 +15,21 @@ export const getUserByEmail = (email) => {
 }
 
 export const userSlice = createSlice({
-    name: 'users',
-    initialState: [],
+    name: 'user',
+    initialState: {username:getUserFullName('full_name'), postHash:userPostHash(), isLoggedIn:isLoggedIn},
     reducers: {
         registerUser: (state, action) => {
             state.push(action.payload);
+        },
+        loginUser:(state, action) => {
+            state.isLoggedIn = isLoggedIn;
+            state.username = getUserFullName('full_name');
+            state.postHash = userPostHash();
+        },
+        logoutUser:(state, action) => {
+            state.isLoggedIn = false;
+            state.username = '';
+            state.postHash = '';
         }
     }
 });
@@ -36,7 +48,7 @@ export const recipeSlice = createSlice({
     }
 });
 
-export const { registerUser } = userSlice.actions
+export const { registerUser,loginUser, logoutUser } = userSlice.actions
 export const userReducer = userSlice.reducer
 
 

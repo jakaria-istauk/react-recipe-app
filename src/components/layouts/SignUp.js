@@ -2,6 +2,9 @@ import React, { useCallback, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { setLoggedIn } from '../../hooks/authentication';
 import { registerUser } from '../../hooks/userApiHandler';
+import { loginUser } from '../redux/reducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const SignUp = () => {
     const loginPassword = useRef(null);
@@ -11,6 +14,8 @@ const SignUp = () => {
     const [message, setMessage] = useState();
     const [valid, setValid] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
+    const userData = useSelector((state)=>state?.user);
+    const dispatchAction = useDispatch();
 
     const handlePassword = useCallback((e) => {
         setIsPassValid(loginPassword.current.value.length > 5 );
@@ -45,7 +50,7 @@ const SignUp = () => {
             if( response?.status ){
                 setValid(true);
                 setLoggedIn(response);
-                window.location.replace('/');
+                dispatchAction( loginUser() );
             }
             else{
                 setSubmitted(false);
@@ -57,6 +62,7 @@ const SignUp = () => {
 
   return (
     <form action="#" method='post' onSubmit={handleSubmit}>
+        {userData?.isLoggedIn ? <Navigate to="/" /> : ''}
         <div className='row justify-content-md-center'>
             <div className='card col col-lg-6 m-4 p-4'>
             {!valid ? <div className="alert alert-danger text-center" role="alert">{message}</div> : ''}

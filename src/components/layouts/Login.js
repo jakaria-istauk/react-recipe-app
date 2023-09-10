@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { setLoggedIn } from '../../hooks/authentication';
 import { authenticatUser } from '../../hooks/userApiHandler';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/reducers';
+import { Navigate } from 'react-router-dom';
 
 function Login() {
     const [valid, setValid] = useState(true);
     const [isSubmitted, setSubmitted] = useState(false);
     const [message, setMessage] = useState();
+    const dispatchAction = useDispatch();
+    const userData = useSelector((state)=>state?.user);
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,7 +21,7 @@ function Login() {
         authenticatUser(formData).then((response)=>{
             if( response?.status ){
                 setLoggedIn(response);
-                window.location.replace('/');
+                dispatchAction( loginUser() );
             }
             else{
                 setSubmitted(false);
@@ -30,6 +35,7 @@ function Login() {
 
   return (
     <form action="#" method='post' onSubmit={handleSubmit}>
+        {userData?.isLoggedIn ? <Navigate to="/" /> : ''}
         <div className='row justify-content-md-center'>
             <div className='card col col-lg-6 m-4 p-4'>
             {!valid ? <div className="alert alert-danger text-center" role="alert">{message}</div> : ''}

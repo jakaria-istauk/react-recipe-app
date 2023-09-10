@@ -3,7 +3,7 @@ import { recipeReducer, userReducer } from './reducers'
 
 export default configureStore({
 	reducer: {
-		users: userReducer,
+		user: userReducer,
 		recipes: recipeReducer
 	}
 })
