@@ -3,7 +3,7 @@ import Recipe from './Recipe';
 import { getAllRecipes } from '../../../hooks/recipeApiHandler';
 import { Link } from 'react-router-dom';
 import Loader from '../../common/Loader';
-import { updateRecipe } from '../../redux/reducers';
+import { fetchRecipes, updateRecipe } from '../../redux/reducers';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Recipes = (props) => {
@@ -14,6 +14,8 @@ const Recipes = (props) => {
   const [paging, setPaging] = useState(parseInt(2));
   const [btnText, setBtnText] = useState('Load More');
   const userData = useSelector((state)=>state?.user);
+  const posts = useSelector((state) => state.recipes)
+
   const per_page = 8;
   
   useEffect(()=>{
@@ -22,6 +24,11 @@ const Recipes = (props) => {
         setIsLoading(false);
       })
   },[])
+  useEffect(()=>{
+    dispatchAction(fetchRecipes({per_page:per_page,author:props?.type}));
+    console.log(posts);
+  }, [ dispatchAction ])
+
 
   const loadeMorePosts = useCallback((e)=>{
     setIsLoadingMore(true);
