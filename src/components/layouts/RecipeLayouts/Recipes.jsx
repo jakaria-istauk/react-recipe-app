@@ -13,10 +13,11 @@ const Recipes = (props) => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [paging, setPaging] = useState(parseInt(2));
   const [btnText, setBtnText] = useState('Load More');
+  let   [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const userData = useSelector((state)=>state?.user);
   const posts = useSelector((state) => state.recipes)
-
-  const per_page = 8;
+  let   per_page = 8;
   
   useEffect(()=>{
       getAllRecipes({per_page:per_page,author:props?.type}).then((data)=>{
@@ -25,8 +26,8 @@ const Recipes = (props) => {
       })
   },[])
   useEffect(()=>{
-    dispatchAction(fetchRecipes({per_page:per_page,author:props?.type}));
-    console.log(posts);
+    // dispatchAction(fetchRecipes({per_page:per_page,author:props?.type}));
+    // console.log(posts);
   }, [ dispatchAction ])
 
 
@@ -49,6 +50,17 @@ const Recipes = (props) => {
     })
   })
 
+  const searchRecipe = useCallback((e)=>{
+    let searchKey = e.target.value;
+    setIsSearching(searchKey.length);
+    if(searchKey.length > 0){
+      filteredRecipes = recipes.filter((recipe) =>{
+          return JSON.stringify(recipe).toLowerCase().includes(searchKey.toLowerCase());
+      });
+      setFilteredRecipes(filteredRecipes);
+    }
+  })
+
   const deletePost = useCallback((e)=>{
 
     dispatchAction(updateRecipe(parseInt(e.target.getAttribute('data-id'))))
@@ -60,7 +72,17 @@ const Recipes = (props) => {
     <div className='row gy-3'>
         {
           isLoading ? <Loader/> :
-          recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} user={userData}/> )
+          <>
+          <div className='col-md-12 mb-1'>
+          <div className="input-group">
+            <input onChange={searchRecipe} type="search" className="form-control rounded" placeholder="Search Recipe" />
+            <button type="button" className="btn btn-outline-secondary">Search Recipe</button>
+          </div>
+          </div>
+          { isSearching 
+              ? filteredRecipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} user={userData}/> ) 
+              : recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} user={userData}/> )}
+          </>
         }
         {
             paging > 0 ? 
