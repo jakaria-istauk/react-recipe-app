@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "NPM",
+      "setup": "",
+      "run": "npm install && npm run build",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5
+    }
+  ]
+}
