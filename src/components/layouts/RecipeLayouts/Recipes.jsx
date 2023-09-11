@@ -35,17 +35,27 @@ const Recipes = (props) => {
     setIsLoadingMore(true);
     setBtnText('Loading...');
     let paging = parseInt(e.target.getAttribute('data-paging'));
+    if(e.target.value == 'all'){
+      per_page = -1;
+    }
+    
     getAllRecipes({page:paging,per_page:per_page, author:props?.type}).then((data)=>{
-        if(data?.length > 0){
-          setRecipes([...recipes,...data]);
-          setPaging(paging+1);
-          setIsLoadingMore(false);
-          setBtnText('Load More');
-        }else{
-          setBtnText('No More Recipe Found');
-          setTimeout(()=>{
-            setPaging(0);
-          },2500);
+        if(e.target.value == 'all'){
+          setPaging(0);
+          setRecipes(data);
+        }
+        else{
+          if(data?.length > 0){
+            setRecipes([...recipes,...data]);
+            setPaging(paging+1);
+            setIsLoadingMore(false);
+            setBtnText('Load More');
+          }else{
+            setBtnText('No More Recipe Found');
+            setTimeout(()=>{
+              setPaging(0);
+            },2500);
+          }
         }
     })
   })
@@ -74,11 +84,19 @@ const Recipes = (props) => {
           isLoading ? <Loader/> :
           <>
           <div className='col-md-12 mb-1'>
-          <div className="input-group">
-            <input onChange={searchRecipe} type="search" className="form-control rounded" placeholder="Search Recipe" />
-            <button type="button" className="btn btn-outline-secondary">Search Recipe</button>
+            <div className="input-group">
+              <input onChange={searchRecipe} type="search" className="form-control" placeholder="Search Recipe" />
+               {isSearching ? <label className={`input-group-text text-white bg-${filteredRecipes?.length ? 'success' : 'danger'}`}>{filteredRecipes?.length} Recipe{filteredRecipes?.length > 1 ? 's' : ''} Found</label> : ''}
+              {
+                !paging ? <button type="button" className="btn btn-outline-secondary">Search Recipe</button>
+                : <select data-paging={paging} onChange={loadeMorePosts} className="btn btn-outline-secondary">
+                    <option >Search From Visible</option>
+                    <option value="all">Search From All</option>
+                  </select> 
+              }
+            </div>
           </div>
-          </div>
+          
           { isSearching 
               ? filteredRecipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} user={userData}/> ) 
               : recipes?.map( recipe => <Recipe key={recipe.id} recipe={recipe} className={`col-md-3 p-1`} deletePost={deletePost} user={userData}/> )}
